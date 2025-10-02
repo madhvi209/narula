@@ -36,7 +36,7 @@ const services = [
 export default function ServicesSection() {
   return (
     <section id="services" className="py-20 bg-secondary/30">
-  <div className="site-container">
+      <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Our  

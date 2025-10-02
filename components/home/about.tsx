@@ -13,7 +13,7 @@ const stats = [
 export function AboutSection() {
     return (
         <section className="py-20 bg-muted/30" id="about">
-            <div className="site-container">
+            <div className="container mx-auto px-4 max-w-6xl">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                     <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
                         <img src="/images/center.jpg" alt="Narula Diagnostics Center" className="rounded-2xl shadow-xl" />

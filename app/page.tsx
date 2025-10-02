@@ -4,12 +4,9 @@ import { AboutSection } from "@/components/home/about";
 import { WhyChooseSection } from "@/components/home/why-choose-us";
 import PlanHealthPackagesSection from "@/components/home/plan-health-packages";
 
-
-
 export default function Home() {
   return (
     <div>
-
       <HeroSection />
       <ServicesSection />
       <AboutSection />

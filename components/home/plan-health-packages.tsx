@@ -78,7 +78,7 @@ const PlanHealthPackagesSection = () => (
   <>
     {/* Health Packages Section */}
     <section id="tests" className="py-20">
-  <div className="site-container">
+      <div className="container mx-auto px-4 max-w-6xl">
         <h2 className="text-3xl sm:text-4xl font-bold text-center text-foreground mb-4">
           Plan Health Package
         </h2>

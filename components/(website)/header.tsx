@@ -14,7 +14,7 @@ export function Header() {
 
   return (
     <header className="bg-white border-b sticky top-0 z-50">
-      <div className="site-container">
+      <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 flex-shrink-0">
@@ -39,8 +39,8 @@ export function Header() {
             <Link href="#services" className="text-sm font-medium hover:text-[#00A5D4] transition-colors">
               Services
             </Link>
-            <Link href="/cart" className="text-sm font-medium hover:text-[#00A5D4] transition-colors">
-              Cart
+            <Link href="/blogs" className="text-sm font-medium hover:text-[#00A5D4] transition-colors">
+              Blogs
             </Link>
             <Link href="#quick-links" className="text-sm font-medium hover:text-[#00A5D4] transition-colors">
               Quick Links
@@ -63,9 +63,9 @@ export function Header() {
               )}
             </Button>
             <Button
-              className="bg-[#00A5D4] hover:bg-[#0090b8] text-white px-3 lg:px-4 h-10 lg:h-12 text-sm lg:text-base font-semibold flex items-center justify-center min-w-[80px] lg:min-w-[100px]"
+              className="bg-[#00A5D4] hover:bg-[#0090b8] text-white px-4 lg:px-6 h-10 lg:h-12 text-sm lg:text-base font-semibold flex items-center justify-center"
             >
-              <Phone className="w-4 h-4 lg:w-5 lg:h-5 mr-0.2 lg:mr-0.5" />
+              <Phone className="w-4 h-4 lg:w-5 lg:h-5 mr-1 lg:mr-2" />
               <span className="hidden sm:inline">Contact</span>
             </Button>
             <Button
@@ -147,12 +147,12 @@ export function Header() {
               >
                 Quick Links
               </Link>
-              <div className="px-4 pt-2 space-y-2">
+              <div className="px-4 pt-4 space-y-3">
                 <Button
-                  className="w-full bg-[#00A5D4] hover:bg-[#0090b8] text-white h-10 text-sm font-semibold flex items-center justify-center min-w-[60px]"
+                  className="w-full bg-[#00A5D4] hover:bg-[#0090b8] text-white h-10 text-sm font-semibold flex items-center justify-center"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <Phone className="w-4 h-4 mr-1" />
+                  <Phone className="w-4 h-4 mr-2" />
                   Contact
                 </Button>
                 <Button
@@ -166,7 +166,7 @@ export function Header() {
             </nav>
           </div>
         )}
-  </div>
+      </div>
       
       {/* Cart Modal */}
       <CartModal 

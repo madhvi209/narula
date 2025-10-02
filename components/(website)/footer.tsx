@@ -37,7 +37,7 @@ const Footer = () => {
           }
         `}
       </style>
-  <div className="site-container">
+      <div className="container mx-auto px-4 max-w-6xl">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-8">
           {/* About */}
           <div className="sm:col-span-2 lg:col-span-1">

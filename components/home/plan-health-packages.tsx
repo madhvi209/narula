@@ -80,7 +80,8 @@ const PlanHealthPackagesSection = () => (
     <section id="tests" className="py-20">
       <div className="container mx-auto px-4 max-w-6xl">
         <h2 className="text-3xl sm:text-4xl font-bold text-center text-foreground mb-4">
-          Plan Health Package
+           Diagnostics Plan
+          <span className="text-[#00A5D4]"> Health Package </span>
         </h2>
         <p className="text-center text-muted-foreground mb-8 sm:mb-12 text-sm sm:text-base max-w-3xl mx-auto">
           नरूला डायग्नोस्टिक सैंटर पर सभी आयु वर्ग के व्यक्तियों के लिए हैल्थ चैक-अप स्कीम उपलब्ध हैं

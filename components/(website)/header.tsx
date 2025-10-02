@@ -66,7 +66,7 @@ export function Header() {
             <Button
               className="bg-[#00A5D4] hover:bg-[#0090b8] text-white px-4 lg:px-6 h-10 lg:h-12 text-sm lg:text-base font-semibold flex items-center justify-center"
             >
-              <Phone className="w-4 h-4 lg:w-5 lg:h-5 mr-1 lg:mr-2" />
+              <Phone className="w-4 h-4 lg:w-5 lg:h-5 mr-0.2 lg:mr-0.5" />
               <span className="hidden sm:inline">Contact</span>
             </Button>
             <Button
@@ -153,7 +153,7 @@ export function Header() {
                   className="w-full bg-[#00A5D4] hover:bg-[#0090b8] text-white h-10 text-sm font-semibold flex items-center justify-center"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <Phone className="w-4 h-4 mr-2" />
+                  <Phone className="w-4 h-4 mr-1" />
                   Contact
                 </Button>
                 <Button

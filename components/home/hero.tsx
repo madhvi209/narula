@@ -24,7 +24,7 @@ const Hero = () => {
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                 style={{ backgroundImage: `url(${heroImage.src})` }}
             >
-                <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/60 to-background/20" />
+                <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-background/50 to-background/10" />
             </div>
 
             <div className="site-container max-w-7xl mx-auto relative z-10">
@@ -50,7 +50,7 @@ const Hero = () => {
                     {/* Right Column - Search and Action Buttons */}
                     <div className="flex flex-col gap-6 items-center justify-center w-full">
                         {/* Serving over 5+ crore patients... */}
-                        <p className="text-base md:text-lg text-muted-foreground animate-fade-in mb-2 text-center w-full">
+                        <p className="text-base md:text-lg text-[#000] animate-fade-in mb-2 text-center w-full">
                             Serving over 5+ crore patients with state-of-the-art technology and expert care across 3 locations in Haryana.
                         </p>
                         {/* Search Bar */}

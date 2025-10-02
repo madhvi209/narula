@@ -14,7 +14,8 @@ export function Header() {
 
   return (
     <header className="bg-white border-b sticky top-0 z-50">
-      <div className="container mx-auto px-4">
+      {/* Use the same max-w-6xl and px-4 as other pages for consistent width */}
+      <div className="mx-auto px-4 w-full max-w-6xl">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 flex-shrink-0">

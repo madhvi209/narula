@@ -40,21 +40,21 @@ const reasons = [
 export function WhyChooseSection() {
     return (
         <section className="py-20 bg-white">
-            <div className="container mx-auto px-4">
+            <div className="site-container">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     className="text-center mb-12"
                 >
-                    <h2 className="text-4xl font-bold mb-4">Why Patients Choose 
+                    <h2 className="text-3xl sm:text-4xl font-bold mb-4">Why Patients Choose 
                         <span className="text-[#00A5D4]"> Narula Diagnostics</span></h2>
-                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                    <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
                         Since 1952, Narula Diagnostics has been a trusted household name in Haryana
                     </p>
                 </motion.div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {reasons.map((reason, index) => (
                         <motion.div
                             key={reason.title}

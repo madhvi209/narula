@@ -36,24 +36,24 @@ const services = [
 export default function ServicesSection() {
   return (
     <section id="services" className="py-20 bg-secondary/30">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-foreground mb-4">
+  <div className="site-container">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Our  
             <span className="text-[#00A5D4]"> Services</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base">
             Comprehensive diagnostic services with state-of-the-art technology
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {services.map((service, index) => (
             <ServiceCard key={index} {...service} />
           ))}
         </div>
 
-        <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+        <div className="mt-8 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm">
           {[
             "Neuro Imaging",
             "Chest Imaging",
@@ -66,7 +66,7 @@ export default function ServicesSection() {
             "Onco / Cancer Imaging & Pathology",
           ].map((item, index) => (
             <div key={index} className="flex items-center gap-2 animate-fade-in">
-              <CheckCircle className="h-5 w-5 text-[#00A5D4] flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-[#00A5D4] flex-shrink-0" />
               <span className="text-muted-foreground">{item}</span>
             </div>
           ))}

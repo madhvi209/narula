@@ -8,8 +8,9 @@ export default function Home() {
   return (
     <div>
       <HeroSection />
-      <ServicesSection />
+
       <AboutSection />
+      <ServicesSection />
       <WhyChooseSection/>
       <PlanHealthPackagesSection/>
     </div>

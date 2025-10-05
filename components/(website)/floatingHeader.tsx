@@ -28,7 +28,12 @@ export default function AnnouncementBar() {
     }, [])
 
     return (
-        <div className="bg-[#00A5D4] text-white py-3 overflow-hidden">
+        <div
+            className="text-white py-3 overflow-hidden"
+            style={{
+                background: "linear-gradient(90deg, #00A5D4 0%, #14486d 100%)"
+            }}
+        >
             <div ref={scrollRef} className="flex whitespace-nowrap">
                 <div className="flex items-center gap-8 px-4">
                     <span className="text-sm font-medium">

@@ -9,10 +9,15 @@ import CartModal from "@/components/ui/cart-modal"
 import { useState, useEffect, useRef } from "react"
 import { Input } from "@/components/ui/input"
 
+type SearchValue = {
+  city: string
+  test: string
+}
+
 export function Header() {
   const { totalItems, isOpen, setIsOpen } = useCart()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [searchValue, setSearchValue] = useState("")
+  const [searchValue, setSearchValue] = useState<SearchValue>({ city: "", test: "" })
   const [isClient, setIsClient] = useState(false)
 
   // Dropdown open state for desktop nav
@@ -57,8 +62,12 @@ export function Header() {
   // Dummy search handler
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    if (searchValue.trim()) {
-      window.location.href = `/search?q=${encodeURIComponent(searchValue)}`
+    if (searchValue.city.trim() || searchValue.test.trim()) {
+      // You can adjust the query string as needed
+      const params = new URLSearchParams()
+      if (searchValue.city.trim()) params.append("city", searchValue.city)
+      if (searchValue.test.trim()) params.append("q", searchValue.test)
+      window.location.href = `/search?${params.toString()}`
     }
   }
 
@@ -295,13 +304,12 @@ export function Header() {
                     <select
                       className="bg-transparent outline-none text-[#14486d] font-medium text-sm md:text-base"
                       style={{ minWidth: 80 }}
-                      value={searchValue.city || ""}
+                      value={searchValue.city}
                       onChange={e =>
-                        setSearchValue((prev: any) =>
-                          typeof prev === "object"
-                            ? { ...prev, city: e.target.value }
-                            : { city: e.target.value, test: "" }
-                        )
+                        setSearchValue(prev => ({
+                          ...prev,
+                          city: e.target.value,
+                        }))
                       }
                     >
                       <option value="">Select City</option>
@@ -315,13 +323,12 @@ export function Header() {
                     <input
                       type="text"
                       placeholder="Search Tests"
-                      value={typeof searchValue === "object" ? searchValue.test || "" : ""}
+                      value={searchValue.test}
                       onChange={e =>
-                        setSearchValue((prev: any) =>
-                          typeof prev === "object"
-                            ? { ...prev, test: e.target.value }
-                            : { city: "", test: e.target.value }
-                        )
+                        setSearchValue(prev => ({
+                          ...prev,
+                          test: e.target.value,
+                        }))
                       }
                       className="bg-transparent outline-none flex-1 text-[#14486d] font-medium text-sm md:text-base"
                     />

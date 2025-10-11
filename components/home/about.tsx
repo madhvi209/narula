@@ -2,37 +2,147 @@
 
 import { useEffect, useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
-import { Award, Users, Building2, TrendingUp } from "lucide-react"
+import { Award, Users, TrendingUp, Hospital, MoveRight } from "lucide-react"
+import { Button } from "../ui/button"
 
-const stats = [
-    { icon: Users, value: "5+ Crore", label: "Patients Served" },
-    { icon: Building2, value: "3", label: "Diagnostic Centers" },
-    { icon: Award, value: "71+ Years", label: "Of Excellence" },
-    { icon: TrendingUp, value: "2000+", label: "Tests Available" },
+const BLUE_100 = "#f0faff";
+const BLUE_200 = "#eaf5fd";
+const BLUE_300 = "#bfe1ff";
+const BLUE_400 = "#00A5D4";    // Primary button, accent
+const BLUE_500 = "#2079c5";    // Dark hover blue
+const BLUE_600 = "#134471";    // Deep heading/primary text
+const BLUE_700 = "#2b8dad";    // Price font
+const BLUE_800 = "#0090b8";    // Secondary accent
+
+// Stat configuration for animated counts and display
+const statsConfig = [
+    {
+        icon: Users,
+        label: "Patients Served",
+        format: (val: number) => `${val}+ Crore`,
+        start: 1,
+        end: 5,
+        step: 1,
+        interval: 270, // SLOWED DOWN
+    },
+    {
+        icon: Hospital,
+        label: "Diagnostic Centers",
+        format: (val: number) => `${val}`,
+        start: 1,
+        end: 4,
+        step: 1,
+        interval: 420, // SLOWED DOWN
+    },
+    {
+        icon: Award,
+        label: "Of Excellence",
+        format: (val: number) => `${val}+ Years`,
+        start: 1,
+        end: 73,
+        step: 10,
+        interval: 240, // SLOWED DOWN
+    },
+    {
+        icon: TrendingUp,
+        label: "Tests Available",
+        format: (val: number) => `${val}+`,
+        start: 1000,
+        end: 10000,
+        step: 1250,
+        interval: 210, // SLOWED DOWN, AND step lowered for smoother count
+    },
 ]
 
-// Animated Experience Badge
+// Gradient for stat cards (lighter blue version of Know More button)
+const LIGHT_GRADIENT =
+    "linear-gradient(99deg, #e3f3fd 0%, #b2e3f9 30%, #d2f3ff 80%, #dbefff 100%)"
+
+function AnimatedStat({ icon: Icon, start, end, step, format, interval, label }: any) {
+    const ref = useRef<HTMLDivElement>(null)
+    const isInView = useInView(ref, { once: false, margin: "-100px" })
+    const [value, setValue] = useState(start)
+    const intervalRef = useRef<NodeJS.Timeout | null>(null)
+
+    useEffect(() => {
+        if (isInView && value < end) {
+            if (intervalRef.current) clearInterval(intervalRef.current)
+            intervalRef.current = setInterval(() => {
+                setValue((prev: number) => {
+                    const next = prev + step
+                    if (next >= end) {
+                        if (intervalRef.current) clearInterval(intervalRef.current)
+                        return end
+                    } else {
+                        return next
+                    }
+                })
+            }, interval)
+        }
+        if (!isInView && value !== start) {
+            if (intervalRef.current) clearInterval(intervalRef.current)
+            setValue(start)
+        }
+        return () => {
+            if (intervalRef.current) clearInterval(intervalRef.current)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isInView])
+
+    return (
+        <div
+            ref={ref}
+            className="flex flex-col items-center w-full"
+        >
+            <div
+                className="rounded-lg shadow p-4 sm:p-6 w-full flex flex-col items-center transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer border border-[#c2e8fa]"
+                style={{
+                    background: LIGHT_GRADIENT,
+                    color: "#146091"
+                }}
+            >
+                <Icon className="w-7 h-7 sm:w-9 sm:h-9 mb-2" style={{ color: "#217ebc" }} />
+                <div
+                    className="text-lg sm:text-2xl font-bold"
+                    style={{
+                        color: "#115a83"
+                    }}
+                >
+                    {format(value)}
+                </div>
+                <div
+                    className="mt-2 text-xs sm:text-sm text-center font-semibold"
+                    style={{
+                        color: "#217ebc"
+                    }}
+                >
+                    {label}
+                </div>
+            </div>
+        </div>
+    )
+}
+
+// Animated Experience Badge (now slowed animation)
 function AnimatedExperienceBadge() {
     const ref = useRef<HTMLDivElement>(null)
-    const isInView = useInView(ref, { once: false, margin: "-100px" }) // once: false so it triggers every time in view
+    const isInView = useInView(ref, { once: false, margin: "-100px" })
     const [exp, setExp] = useState(1)
     const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
     useEffect(() => {
-        // If in view and not already at 71, start animation
-        if (isInView && exp < 71) {
+        if (isInView && exp < 73) {
             if (intervalRef.current) clearInterval(intervalRef.current)
             intervalRef.current = setInterval(() => {
                 setExp((prev) => {
-                    if (prev + 5 >= 71) {
+                    if (prev + 10 >= 73) {
                         if (intervalRef.current) clearInterval(intervalRef.current)
-                        return 71
+                        return 73
                     }
-                    return prev + 5
+                    return prev + 10
                 })
-            }, 60)
+            }, 210) // SLOWED DOWN
         }
-        // If out of view, reset to 1
         if (!isInView && exp !== 1) {
             if (intervalRef.current) clearInterval(intervalRef.current)
             setExp(1)
@@ -46,7 +156,6 @@ function AnimatedExperienceBadge() {
     return (
         <div
             ref={ref}
-            // Set gradient same as the "Know More" button: from-[#0a3d62] via-[#00a5d4] to-[#1a3033]
             className="absolute top-4 right-4 bg-gradient-to-r from-[#0a3d62] via-[#00a5d4] to-[#1a3033] text-white px-5 py-2 rounded-xl shadow-lg flex flex-col items-center"
             style={{ minWidth: 80 }}
         >
@@ -61,7 +170,7 @@ function AnimatedExperienceBadge() {
 
 export function AboutSection() {
     return (
-        <section className="py-20 bg-gradient-to-br from-[#e3f0ff] via-[#e0eaff] to-[#b3d0f7]" id="about">
+        <section className="py-20" id="about">
             <div className="container mx-auto px-4 max-w-6xl">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                     {/* Left section with layered images and experience badge */}
@@ -85,7 +194,7 @@ export function AboutSection() {
                         {/* Small overlay image, bottom left */}
                         <div className="absolute -bottom-10 -left-10 shadow-xl rounded-xl overflow-hidden border-4 border-white bg-white w-48 aspect-[4/3]">
                             <img
-                                src="/images/center.jpg"
+                                src="/images/about.png"
                                 alt="Diagnostic Center"
                                 className="w-full h-full object-cover"
                             />
@@ -99,20 +208,25 @@ export function AboutSection() {
                         viewport={{ once: true }}
                         className="space-y-6"
                     >
-                        <h2 className="text-4xl sm:text-5xl font-bold">
+                        <h2 className="text-[24px] sm:text-[27px] md:text-[39px] font-semibold">
                             Your Trusted Partner in
                             <br />
-                            <span className="bg-gradient-to-r from-[#00A5D4] via-[#0d2c42] to-[#1f5860] bg-clip-text text-transparent">
+                            <span className="bg-clip-text text-transparent" style={{
+                                backgroundImage: `linear-gradient(to right, #2079c5, #00A5D4, #0090b8)`
+                            }}>
                                 Early Detection Since{" "}
                                 <span className="relative group">
                                     <span
-                                        className="bg-gradient-to-r from-[#00A5D4] via-[#0d2c42] to-[#1f5860] bg-clip-text text-transparent relative"
+                                        className="bg-clip-text text-transparent relative"
                                         style={{
+                                            backgroundImage: `linear-gradient(to right, #2079c5, #00A5D4, #0090b8)`,
                                             WebkitTextDecorationLine: "underline",
                                             textDecorationLine: "underline",
                                             WebkitTextDecorationColor: "transparent",
                                             textDecorationColor: "transparent",
                                             position: "relative",
+                                            fontSize: "inherit",
+                                            fontWeight: "inherit"
                                         }}
                                     >
                                         1952
@@ -121,7 +235,7 @@ export function AboutSection() {
                                             className="absolute left-0 bottom-0 h-[4px] rounded transition-all duration-300"
                                             style={{
                                                 width: "50%",
-                                                background: "linear-gradient(to right, #00A5D4, #0d2c42, #1f5860)",
+                                                background: "linear-gradient(to right, #2079c5, #00A5D4, #0090b8)",
                                                 transition: "width 0.3s cubic-bezier(.4,0,.2,1)",
                                             }}
                                         />
@@ -138,33 +252,40 @@ export function AboutSection() {
                             Narula Diagnostic Centre, founded in 1952 by Late Dr. Lal Chand Narula, has been a pioneer in medical imaging and diagnostics in North India. From introducing X-ray and Ultrasound to advanced technologies like Colour Doppler, Fetal Scanning, CT, MRI, and PET-CT, Narula has continuously led the way in healthcare innovation.
                         </p>
                         <p className="text-gray-800/80 text-pretty leading-relaxed text-base sm:text-lg">
-                            With 3 state-of-the-art centres in Rohtak and Gurugram, the centre offers over 2000+ NABL-certified tests and has served more than 5 crore patients. Renowned for world-class equipment like the 128 Slice Lyso Crystal PET CT and advanced MRI systems, Narula Diagnostics is trusted for its accuracy, affordable testing, and timely online reports.
+                            With 3 state-of-the-art centres in Rohtak and Gurugram, the centre offers over 10000+ NABL-certified tests and has served more than 5 crore patients. Renowned for world-class equipment like the 128 Slice Lyso Crystal PET CT and advanced MRI systems, Narula Diagnostics is trusted for its accuracy, affordable testing, and timely online reports.
                         </p>
-                        <div className="flex justify-end">
-                            <a
-                                href="#"
-                                className="inline-block px-7 py-3 rounded-lg font-semibold text-white shadow-xl transition-all duration-200 border-0 bg-gradient-to-r from-[#0a3d62] via-[#00a5d4] to-[#1a3033] hover:from-[#00a5d4] hover:to-[#0a3d62] hover:scale-105 focus:ring-2 focus:ring-[#00a5d4] focus:ring-offset-2"
+                        <div className="flex justify-end mt-8">
+                            <Button
+                                onClick={() => {
+                                    console.log("Know More button clicked");
+                                }}
+                                className="font-semibold px-6 py-2 rounded-lg transition-colors duration-200 shadow-[var(--shadow-button)] hover:brightness-110 hover:scale-[1.03] hover:shadow-lg flex items-center gap-2"
+                                style={{
+                                    background: `linear-gradient(to right, ${BLUE_400}, ${BLUE_500}, ${BLUE_600})`,
+                                    color: "#fff",
+                                }}
+                                type="button"
                             >
                                 Know More..
-                            </a>
+                                <span>
+                                    <MoveRight className="size-5 inline-block" />
+                                </span>
+                            </Button>
                         </div>
                     </motion.div>
                 </div>
-                {/* Stats moved below the image and text, full width */}
+                {/* Stats below the image and text */}
                 <div className="mt-12">
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                        {stats.map((stat, index) => (
+                        {statsConfig.map((stat, idx) => (
                             <motion.div
                                 key={stat.label}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
-                                className="bg-gradient-to-br from-[#e0eaff] via-[#b3d0f7] to-[#799dc6] p-4 sm:p-6 rounded-lg shadow flex flex-col items-center transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer mt-4"
+                                transition={{ delay: idx * 0.1 }}
                             >
-                                <stat.icon className="w-6 h-6 sm:w-8 sm:h-8 text-[#2563eb] mb-2 transition-colors duration-300 group-hover:text-[#1e40af]" />
-                                <div className="text-lg sm:text-2xl font-bold text-[#1e293b]">{stat.value}</div>
-                                <div className="text-xs sm:text-sm text-[#334155] text-center">{stat.label}</div>
+                                <AnimatedStat {...stat} />
                             </motion.div>
                         ))}
                     </div>

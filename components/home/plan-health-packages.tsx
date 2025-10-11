@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button"
 import { TestTube, Droplet, Heart, Activity, Stethoscope, Scan, Wind, Shield, ShoppingCart } from "lucide-react"
 import { useCallback } from "react"
 
-const PRIMARY_COLOR = "#06b6d4"; // Tailwind cyan-500
+const PRIMARY_COLOR = "#00A5D4"; // Tailwind cyan-500
+//bg - [#00A5D4] hover: bg - [#0090b8] text - white
 
 type HealthPackage = {
   category: string

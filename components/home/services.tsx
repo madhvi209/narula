@@ -105,7 +105,7 @@ export default function ServicesSection() {
       className="py-20 relative overflow-hidden"
       style={{
         background:
-          "linear-gradient(120deg, #ffff 0%#e0f7fa,  50%, #ffff 100%)",
+          "linear-gradient(110deg, #e3f2fd 0%, #b4e0ff 50%, #e0f7fa 100%)",
       }}
     >
       {/* 3D grid subtle effect, matching hero section */}
@@ -119,16 +119,17 @@ export default function ServicesSection() {
       />
       <div className="relative z-10 container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-4 sm:mb-6">
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-700 mb-2">
-            Diagnostics
+          <h2 className="text-[24px] sm:text-[27px] md:text-[39px] font-semibold mb-3 text-left" style={{ color: "#134471" }}>
+            Our{" "}
             <span
-              className="bg-gradient-to-r from-[#00A5D4] via-[#0d2c42] to-[#1f5860] bg-clip-text text-transparent"
-            > We Offer
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage: `linear-gradient(to right, #2079c5, #00A5D4, #0090b8)`,
+              }}
+            >
+              Services
             </span>
           </h2>
-          <p className="text-primary-foreground/80 max-w-2xl mx-auto text-sm sm:text-base">
-            Comprehensive diagnostic services with state-of-the-art technology
-          </p>
         </div>
 
         <div className="relative flex items-center">

@@ -168,7 +168,22 @@ function AnimatedExperienceBadge() {
     )
 }
 
+// Responsive AboutSection
 export function AboutSection() {
+    // Media query for responsiveness (no UI changes)
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        function handleResize() {
+            if (typeof window !== "undefined") {
+                setIsMobile(window.innerWidth < 640);
+            }
+        }
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
     return (
         <section className="py-20" id="about">
             <div className="container mx-auto px-4 max-w-6xl">
@@ -181,24 +196,26 @@ export function AboutSection() {
                         className="relative flex items-start justify-center"
                     >
                         {/* Large main image */}
-                        <div className="relative rounded-2xl shadow-2xl overflow-hidden w-full max-w-[480px] aspect-[4/3] bg-[#e6f0fa]" style={{ minHeight: "500px" }}>
+                        <div className="relative rounded-2xl shadow-2xl overflow-hidden w-full max-w-[480px] aspect-[4/3] bg-[#e6f0fa]" style={{ minHeight: isMobile ? "300px" : "500px" }}>
                             <img
                                 src="/images/narula.jpeg"
                                 alt="Narula Diagnostics Center"
                                 className="w-full h-full object-cover rounded-2xl"
-                                style={{ minHeight: "500px", height: "50px" }}
+                                style={{ minHeight: isMobile ? "300px" : "500px", height: isMobile ? "40px" : "50px" }}
                             />
                             {/* Experience badge with animation */}
                             <AnimatedExperienceBadge />
                         </div>
-                        {/* Small overlay image, bottom left */}
-                        <div className="absolute -bottom-10 -left-10 shadow-xl rounded-xl overflow-hidden border-4 border-white bg-white w-48 aspect-[4/3]">
-                            <img
-                                src="/images/about.png"
-                                alt="Diagnostic Center"
-                                className="w-full h-full object-cover"
-                            />
-                        </div>
+                        {/* Small overlay image, bottom left - hide on mobile */}
+                        {!isMobile && (
+                            <div className="absolute -bottom-10 -left-10 shadow-xl rounded-xl overflow-hidden border-4 border-white bg-white w-48 aspect-[4/3]">
+                                <img
+                                    src="/images/about.png"
+                                    alt="Diagnostic Center"
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                        )}
                     </motion.div>
 
                     {/* Right section with text */}

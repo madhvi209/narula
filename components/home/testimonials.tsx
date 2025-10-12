@@ -140,15 +140,27 @@ export default function TestimonialsSection() {
 
   const speed = totalScrollWidth / TRANSITION_DURATION;
 
+  // Wrap the animateScroll logic so controls.set is never called before mount
+  const isMountedRef = useRef(false);
+
   function animateScroll(timestamp: number) {
     if (startRef.current === null) startRef.current = timestamp;
     const timeDelta = (timestamp - startRef.current) / 1000 + elapsedWhenPausedRef.current;
     const x = -((timeDelta * speed) % totalScrollWidth);
-    controls.set({ x });
+    if (isMountedRef.current) {
+      controls.set({ x });
+    }
     if (!isPaused) {
       rafIdRef.current = requestAnimationFrame(animateScroll);
     }
   }
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (isPaused) {

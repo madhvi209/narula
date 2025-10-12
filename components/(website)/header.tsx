@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/contexts/CartContext"
 import CartModal from "@/components/ui/cart-modal"
 import { useState, useEffect, useRef } from "react"
-import { Input } from "@/components/ui/input"
+import { useRouter } from "next/navigation"
 
 type SearchValue = {
   city: string
@@ -15,6 +15,7 @@ type SearchValue = {
 }
 
 export function Header() {
+  const router = useRouter()
   const { totalItems, isOpen, setIsOpen } = useCart()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [searchValue, setSearchValue] = useState<SearchValue>({ city: "", test: "" })
@@ -71,6 +72,10 @@ export function Header() {
     }
   }
 
+  /**
+   * HideOnScroll: shows/hides its children based on scroll
+   * (No controls.set()/animation is present here, but if you added one, it should go in useEffect)
+   */
   function HideOnScroll({ children }: { children: React.ReactNode }) {
     const [show, setShow] = useState(true)
     const [lastScrollY, setLastScrollY] = useState(0)
@@ -124,6 +129,12 @@ export function Header() {
       />
     </svg>
   )
+
+  // Handler to redirect to /cart on cart button click
+  const handleCartClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    router.push('/cart')
+  }
 
   return (
     <>
@@ -242,7 +253,7 @@ export function Header() {
                 variant="ghost"
                 size="icon"
                 className="relative w-9 h-9 lg:w-11 lg:h-11 bg-white"
-                onClick={() => setIsOpen(true)}
+                onClick={handleCartClick}
               >
                 <ShoppingCart className="w-5 h-5 lg:w-6 lg:h-6" />
                 {totalItems > 0 && (
@@ -266,7 +277,7 @@ export function Header() {
                 variant="ghost"
                 size="icon"
                 className="relative w-12 h-12 bg-white"
-                onClick={() => setIsOpen(true)}
+                onClick={handleCartClick}
               >
                 <ShoppingCart className="w-6 h-6" />
                 {totalItems > 0 && (

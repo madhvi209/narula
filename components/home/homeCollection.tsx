@@ -241,7 +241,7 @@ const HomeBooking = () => {
                 </li>
               </ul>
             </div>
-            {/* Hero Image */}
+            {/* Hero Image: only show on md+ (hidden below md) */}
             <div
               className="hidden md:flex md:w-1/2 items-center justify-center p-0 pr-0 relative -ml-16"
               style={{

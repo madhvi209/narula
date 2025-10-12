@@ -3457,17 +3457,27 @@ function TestimonialsSection() {
     const rafIdRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
     const startRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
     const speed = totalScrollWidth / TRANSITION_DURATION;
+    // Wrap the animateScroll logic so controls.set is never called before mount
+    const isMountedRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(false);
     function animateScroll(timestamp) {
         if (startRef.current === null) startRef.current = timestamp;
         const timeDelta = (timestamp - startRef.current) / 1000 + elapsedWhenPausedRef.current;
         const x = -(timeDelta * speed % totalScrollWidth);
-        controls.set({
-            x
-        });
+        if (isMountedRef.current) {
+            controls.set({
+                x
+            });
+        }
         if (!isPaused) {
             rafIdRef.current = requestAnimationFrame(animateScroll);
         }
     }
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        isMountedRef.current = true;
+        return ()=>{
+            isMountedRef.current = false;
+        };
+    }, []);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (isPaused) {
             if (startRef.current !== null) {
@@ -3553,7 +3563,7 @@ function TestimonialsSection() {
       `
             }, void 0, false, {
                 fileName: "[project]/components/home/testimonials.tsx",
-                lineNumber: 189,
+                lineNumber: 201,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
@@ -3571,7 +3581,7 @@ function TestimonialsSection() {
                             offset: "0%"
                         }, void 0, false, {
                             fileName: "[project]/components/home/testimonials.tsx",
-                            lineNumber: 236,
+                            lineNumber: 248,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("stop", {
@@ -3579,18 +3589,18 @@ function TestimonialsSection() {
                             offset: "100%"
                         }, void 0, false, {
                             fileName: "[project]/components/home/testimonials.tsx",
-                            lineNumber: 237,
+                            lineNumber: 249,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/home/testimonials.tsx",
-                    lineNumber: 235,
+                    lineNumber: 247,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/home/testimonials.tsx",
-                lineNumber: 234,
+                lineNumber: 246,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -3623,12 +3633,12 @@ function TestimonialsSection() {
                                 children: "What Our Patients Say"
                             }, void 0, false, {
                                 fileName: "[project]/components/home/testimonials.tsx",
-                                lineNumber: 254,
+                                lineNumber: 266,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/home/testimonials.tsx",
-                            lineNumber: 248,
+                            lineNumber: 260,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3672,33 +3682,33 @@ function TestimonialsSection() {
                                             ...t
                                         }, void 0, false, {
                                             fileName: "[project]/components/home/testimonials.tsx",
-                                            lineNumber: 288,
+                                            lineNumber: 300,
                                             columnNumber: 19
                                         }, this)
                                     }, idx, false, {
                                         fileName: "[project]/components/home/testimonials.tsx",
-                                        lineNumber: 274,
+                                        lineNumber: 286,
                                         columnNumber: 17
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/components/home/testimonials.tsx",
-                                lineNumber: 263,
+                                lineNumber: 275,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/home/testimonials.tsx",
-                            lineNumber: 262,
+                            lineNumber: 274,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/home/testimonials.tsx",
-                    lineNumber: 247,
+                    lineNumber: 259,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/home/testimonials.tsx",
-                lineNumber: 240,
+                lineNumber: 252,
                 columnNumber: 7
             }, this)
         ]
@@ -3720,17 +3730,17 @@ function TestimonialCard({ reviewerName, rating = 5, quote, className }) {
                                 children: reviewerName
                             }, void 0, false, {
                                 fileName: "[project]/components/home/testimonials.tsx",
-                                lineNumber: 312,
+                                lineNumber: 324,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/home/testimonials.tsx",
-                            lineNumber: 311,
+                            lineNumber: 323,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/home/testimonials.tsx",
-                        lineNumber: 310,
+                        lineNumber: 322,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3752,17 +3762,17 @@ function TestimonialCard({ reviewerName, rating = 5, quote, className }) {
                                     stroke: "none"
                                 }, void 0, false, {
                                     fileName: "[project]/components/home/testimonials.tsx",
-                                    lineNumber: 321,
+                                    lineNumber: 333,
                                     columnNumber: 15
                                 }, this)
                             }, i, false, {
                                 fileName: "[project]/components/home/testimonials.tsx",
-                                lineNumber: 317,
+                                lineNumber: 329,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/components/home/testimonials.tsx",
-                        lineNumber: 315,
+                        lineNumber: 327,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3770,13 +3780,13 @@ function TestimonialCard({ reviewerName, rating = 5, quote, className }) {
                         "aria-hidden": "true"
                     }, void 0, false, {
                         fileName: "[project]/components/home/testimonials.tsx",
-                        lineNumber: 330,
+                        lineNumber: 342,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/home/testimonials.tsx",
-                lineNumber: 309,
+                lineNumber: 321,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Card"], {
@@ -3795,23 +3805,23 @@ function TestimonialCard({ reviewerName, rating = 5, quote, className }) {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/home/testimonials.tsx",
-                        lineNumber: 337,
+                        lineNumber: 349,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/home/testimonials.tsx",
-                    lineNumber: 336,
+                    lineNumber: 348,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/home/testimonials.tsx",
-                lineNumber: 333,
+                lineNumber: 345,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/home/testimonials.tsx",
-        lineNumber: 307,
+        lineNumber: 319,
         columnNumber: 5
     }, this);
 }

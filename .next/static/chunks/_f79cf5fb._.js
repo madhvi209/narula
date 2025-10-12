@@ -2846,26 +2846,9 @@ const selectedButtonStyle = (selected)=>({
 const HomeBooking = ()=>{
     _s();
     const [activeCategory, setActiveCategory] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("healthPackages");
-    const [searchData, setSearchData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
-        items: [
-            ...servicesData.healthPackages,
-            ...servicesData.pathologyTests,
-            ...servicesData.radiologyTests
-        ],
-        filtered: false
-    });
-    function handleClearFilters() {
-        setActiveCategory("healthPackages");
-        setSearchData({
-            items: [
-                ...servicesData.healthPackages,
-                ...servicesData.pathologyTests,
-                ...servicesData.radiologyTests
-            ],
-            filtered: false
-        });
-    }
-    const visibleItems = searchData.items;
+    const [showAll, setShowAll] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    // Helper to get visible items
+    const visibleItems = showAll ? servicesData[activeCategory] : servicesData[activeCategory].slice(0, 3);
     const HERO_IMAGE_SRC = "/images/home.png";
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         className: "py-12 sm:py-16 px-2 xs:px-4 sm:px-6 md:px-8 xl:px-0 w-full",
@@ -2897,7 +2880,7 @@ const HomeBooking = ()=>{
                                         children: "Book Home Collection"
                                     }, void 0, false, {
                                         fileName: "[project]/components/home/homeCollection.tsx",
-                                        lineNumber: 242,
+                                        lineNumber: 226,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -2910,20 +2893,20 @@ const HomeBooking = ()=>{
                                                         className: "h-6 w-6 mt-1 flex-shrink-0 text-cyan-200"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/home/homeCollection.tsx",
-                                                        lineNumber: 247,
+                                                        lineNumber: 231,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         children: "Convenient & Time Saving"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/home/homeCollection.tsx",
-                                                        lineNumber: 248,
+                                                        lineNumber: 232,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/home/homeCollection.tsx",
-                                                lineNumber: 246,
+                                                lineNumber: 230,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -2933,20 +2916,20 @@ const HomeBooking = ()=>{
                                                         className: "h-6 w-6 mt-1 flex-shrink-0 text-blue-200"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/home/homeCollection.tsx",
-                                                        lineNumber: 251,
+                                                        lineNumber: 235,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         children: "Vast test menu of 2500+ tests at your doorstep"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/home/homeCollection.tsx",
-                                                        lineNumber: 252,
+                                                        lineNumber: 236,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/home/homeCollection.tsx",
-                                                lineNumber: 250,
+                                                lineNumber: 234,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -2956,32 +2939,32 @@ const HomeBooking = ()=>{
                                                         className: "h-6 w-6 mt-1 flex-shrink-0 text-sky-200"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/home/homeCollection.tsx",
-                                                        lineNumber: 255,
+                                                        lineNumber: 239,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         children: "Online Access to Reports"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/home/homeCollection.tsx",
-                                                        lineNumber: 256,
+                                                        lineNumber: 240,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/home/homeCollection.tsx",
-                                                lineNumber: 254,
+                                                lineNumber: 238,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/home/homeCollection.tsx",
-                                        lineNumber: 245,
+                                        lineNumber: 229,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/home/homeCollection.tsx",
-                                lineNumber: 234,
+                                lineNumber: 218,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3008,23 +2991,23 @@ const HomeBooking = ()=>{
                                     loading: "lazy"
                                 }, void 0, false, {
                                     fileName: "[project]/components/home/homeCollection.tsx",
-                                    lineNumber: 267,
+                                    lineNumber: 251,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/components/home/homeCollection.tsx",
-                                lineNumber: 261,
+                                lineNumber: 245,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/home/homeCollection.tsx",
-                        lineNumber: 232,
+                        lineNumber: 216,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/components/home/homeCollection.tsx",
-                    lineNumber: 225,
+                    lineNumber: 209,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3035,12 +3018,7 @@ const HomeBooking = ()=>{
                         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>{
                                 setActiveCategory(key);
-                                setSearchData({
-                                    items: [
-                                        ...servicesData[key]
-                                    ],
-                                    filtered: true
-                                });
+                                setShowAll(false);
                             },
                             className: "font-semibold px-4 md:px-6 py-2 rounded shadow-[var(--shadow-button)]",
                             style: selectedButtonStyle(selected),
@@ -3048,13 +3026,13 @@ const HomeBooking = ()=>{
                             children: label
                         }, key, false, {
                             fileName: "[project]/components/home/homeCollection.tsx",
-                            lineNumber: 295,
+                            lineNumber: 279,
                             columnNumber: 15
                         }, ("TURBOPACK compile-time value", void 0));
                     })
                 }, void 0, false, {
                     fileName: "[project]/components/home/homeCollection.tsx",
-                    lineNumber: 291,
+                    lineNumber: 275,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3079,7 +3057,7 @@ const HomeBooking = ()=>{
                                         discount: pkg.discount
                                     }, void 0, false, {
                                         fileName: "[project]/components/home/homeCollection.tsx",
-                                        lineNumber: 333,
+                                        lineNumber: 314,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3096,7 +3074,7 @@ const HomeBooking = ()=>{
                                                         children: pkg.title
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/home/homeCollection.tsx",
-                                                        lineNumber: 336,
+                                                        lineNumber: 317,
                                                         columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3111,13 +3089,13 @@ const HomeBooking = ()=>{
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/home/homeCollection.tsx",
-                                                        lineNumber: 342,
+                                                        lineNumber: 323,
                                                         columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/home/homeCollection.tsx",
-                                                lineNumber: 335,
+                                                lineNumber: 316,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3132,18 +3110,18 @@ const HomeBooking = ()=>{
                                                     }
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/home/homeCollection.tsx",
-                                                    lineNumber: 356,
+                                                    lineNumber: 337,
                                                     columnNumber: 23
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             }, void 0, false, {
                                                 fileName: "[project]/components/home/homeCollection.tsx",
-                                                lineNumber: 349,
+                                                lineNumber: 330,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/home/homeCollection.tsx",
-                                        lineNumber: 334,
+                                        lineNumber: 315,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3155,7 +3133,7 @@ const HomeBooking = ()=>{
                                         children: pkg.description
                                     }, void 0, false, {
                                         fileName: "[project]/components/home/homeCollection.tsx",
-                                        lineNumber: 364,
+                                        lineNumber: 345,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3177,7 +3155,7 @@ const HomeBooking = ()=>{
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/home/homeCollection.tsx",
-                                                        lineNumber: 376,
+                                                        lineNumber: 357,
                                                         columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3191,13 +3169,13 @@ const HomeBooking = ()=>{
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/home/homeCollection.tsx",
-                                                        lineNumber: 384,
+                                                        lineNumber: 365,
                                                         columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/home/homeCollection.tsx",
-                                                lineNumber: 375,
+                                                lineNumber: 356,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3213,38 +3191,36 @@ const HomeBooking = ()=>{
                                                 children: "Add to Cart"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/home/homeCollection.tsx",
-                                                lineNumber: 393,
+                                                lineNumber: 374,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/home/homeCollection.tsx",
-                                        lineNumber: 371,
+                                        lineNumber: 352,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/home/homeCollection.tsx",
-                                lineNumber: 332,
+                                lineNumber: 313,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         }, pkg.id, false, {
                             fileName: "[project]/components/home/homeCollection.tsx",
-                            lineNumber: 319,
+                            lineNumber: 300,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0));
                     })
                 }, void 0, false, {
                     fileName: "[project]/components/home/homeCollection.tsx",
-                    lineNumber: 315,
+                    lineNumber: 296,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "flex justify-end mt-2",
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                        onClick: ()=>{
-                        // See all clicked for current category
-                        },
+                    children: !showAll && servicesData[activeCategory].length > visibleItems.length && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                        onClick: ()=>setShowAll(true),
                         className: "font-semibold px-4 md:px-6 transition-colors duration-200 shadow-[var(--shadow-button)] hover:brightness-110 hover:scale-[1.03] hover:shadow-lg",
                         style: {
                             background: buttonGradient,
@@ -3254,27 +3230,27 @@ const HomeBooking = ()=>{
                         children: "View All"
                     }, void 0, false, {
                         fileName: "[project]/components/home/homeCollection.tsx",
-                        lineNumber: 413,
-                        columnNumber: 11
+                        lineNumber: 395,
+                        columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/components/home/homeCollection.tsx",
-                    lineNumber: 412,
+                    lineNumber: 393,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             ]
         }, void 0, true, {
             fileName: "[project]/components/home/homeCollection.tsx",
-            lineNumber: 223,
+            lineNumber: 207,
             columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0))
     }, void 0, false, {
         fileName: "[project]/components/home/homeCollection.tsx",
-        lineNumber: 217,
+        lineNumber: 201,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s(HomeBooking, "5baJhMuxQQKG944WVp82478djdE=");
+_s(HomeBooking, "POUBUoHx+RCpwcSXWQkBAsfjMss=");
 _c1 = HomeBooking;
 const __TURBOPACK__default__export__ = HomeBooking;
 var _c, _c1;

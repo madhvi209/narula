@@ -5,26 +5,35 @@ import { WhyChooseSection } from "@/components/home/why-choose-us";
 import More from "@/components/home/more";
 import { PopularHealthPackages } from "@/components/home/test"; // corrected import
 import FrequentlyBooked from "@/components/home/popularTest";
-// import TeamSection from "@/components/home/team";
-// import HomeCollection from "@/components/home/homeCollection";
+import TeamSection from "@/components/home/team";
+import HomeCollection from "@/components/home/homeCollection";
+import HitechEquipments from "@/components/home/hightTech"
+import TestimonialsSection from "@/components/home/testimonials";
+import HealthConcernsSection from "@/components/home/health-concern";
+import ContactClientPage from "@/components/home/conatct";
+import MriCtSection from "@/components/home/mriCt";
+import Gallery from "@/components/home/gallery";
 
 export default function Home() {
   return (
     <div>
       <HeroSection />
       <More />
-      <FrequentlyBooked/>
+      <FrequentlyBooked />
       <WhyChooseSection />
       <PopularHealthPackages />
       <ServicesSection />
       <AboutSection />
-      {/* <HomeCollection/> */}
-      {/* <TeamSection/> */}
-    
-    
-     
-    
-     
+      <HomeCollection />
+      <TeamSection />
+      <HealthConcernsSection />
+      <HitechEquipments />
+      <Gallery/>
+      <TestimonialsSection />
+      <MriCtSection />
+      <ContactClientPage />
+
+
     </div>
   );
 }

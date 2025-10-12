@@ -187,29 +187,13 @@ const selectedButtonStyle = (selected: boolean) => ({
 });
 
 const HomeBooking = () => {
-  const [activeCategory, setActiveCategory] = useState("healthPackages");
-  const [searchData, setSearchData] = useState({
-    items: [
-      ...servicesData.healthPackages,
-      ...servicesData.pathologyTests,
-      ...servicesData.radiologyTests,
-    ],
-    filtered: false,
-  });
+  const [activeCategory, setActiveCategory] = useState<keyof typeof servicesData>("healthPackages");
+  const [showAll, setShowAll] = useState(false);
 
-  function handleClearFilters() {
-    setActiveCategory("healthPackages");
-    setSearchData({
-      items: [
-        ...servicesData.healthPackages,
-        ...servicesData.pathologyTests,
-        ...servicesData.radiologyTests,
-      ],
-      filtered: false,
-    });
-  }
-
-  const visibleItems = searchData.items;
+  // Helper to get visible items
+  const visibleItems = showAll
+    ? servicesData[activeCategory]
+    : servicesData[activeCategory].slice(0, 3);
 
   const HERO_IMAGE_SRC = "/images/home.png";
 
@@ -295,11 +279,8 @@ const HomeBooking = () => {
               <button
                 key={key}
                 onClick={() => {
-                  setActiveCategory(key);
-                  setSearchData({
-                    items: [...servicesData[key as keyof typeof servicesData]],
-                    filtered: true,
-                  });
+                  setActiveCategory(key as keyof typeof servicesData);
+                  setShowAll(false);
                 }}
                 className={`font-semibold px-4 md:px-6 py-2 rounded shadow-[var(--shadow-button)]`}
                 style={selectedButtonStyle(selected)}
@@ -410,19 +391,20 @@ const HomeBooking = () => {
         </div>
 
         <div className="flex justify-end mt-2">
-          <Button
-            onClick={() => {
-              // See all clicked for current category
-            }}
-            className="font-semibold px-4 md:px-6 transition-colors duration-200 shadow-[var(--shadow-button)] hover:brightness-110 hover:scale-[1.03] hover:shadow-lg"
-            style={{
-              background: buttonGradient,
-              color: "#fff",
-            }}
-            type="button"
-          >
-            View All
-          </Button>
+          {!showAll && servicesData[activeCategory].length > visibleItems.length && (
+            <Button
+              onClick={() => setShowAll(true)}
+              className="font-semibold px-4 md:px-6 transition-colors duration-200 shadow-[var(--shadow-button)] hover:brightness-110 hover:scale-[1.03] hover:shadow-lg"
+              style={{
+                background: buttonGradient,
+                color: "#fff",
+              }}
+              type="button"
+            >
+              View All
+            </Button>
+          )}
+          {/* Hide View All if all items are showing */}
         </div>
       </div>
     </section>

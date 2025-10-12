@@ -2,6 +2,10 @@
 
 import { Facebook, Instagram, Linkedin, Youtube, Mail, Phone, MapPin } from "lucide-react";
 
+// These are based on file_context_1 and file_context_0
+const DARK_BG_START = "#151a23";
+const DARK_BG_MID = "#222e3e";
+const DARK_BG_END = "#223455";
 const PRIMARY_COLOR = "#00A5D4";
 
 const Footer = () => {
@@ -20,7 +24,13 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-card border-t border-border pt-16 pb-8">
+    <footer
+      className="border-t border-border pt-16 pb-8"
+      style={{
+        background: `linear-gradient(110deg, ${DARK_BG_START} 0%, ${DARK_BG_MID} 60%, ${DARK_BG_END} 100%)`,
+        backgroundColor: DARK_BG_MID,
+      }}
+    >
       <style>
         {`
           .footer-primary {
@@ -41,8 +51,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-8">
           {/* About */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <h3 className="text-lg sm:text-xl font-bold mb-4">Narula Diagnostics</h3>
-            <p className="text-muted-foreground mb-4 text-sm sm:text-base">
+            <h3 className="text-lg sm:text-xl font-bold mb-4 text-white">Narula Diagnostics</h3>
+            <p className="text-muted-foreground mb-4 text-sm sm:text-base" style={{ color: "#c8d0e1" }}>
               Leading diagnostic centre serving patients since 1952 with state-of-the-art
               technology and expert care.
             </p>
@@ -64,14 +74,14 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg sm:text-xl font-bold mb-4">Quick Links</h3>
+            <h3 className="text-lg sm:text-xl font-bold mb-4 text-white">Quick Links</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link}>
                   <a
                     href={`#${link.toLowerCase().replace(/\s+/g, "-")}`}
                     className="text-muted-foreground transition-colors footer-link-hover text-sm sm:text-base"
-                    style={{}}
+                    style={{ color: "#c8d0e1" }}
                   >
                     {link}
                   </a>
@@ -82,14 +92,14 @@ const Footer = () => {
 
           {/* Locations */}
           <div>
-            <h3 className="text-lg sm:text-xl font-bold mb-4">Our Locations</h3>
+            <h3 className="text-lg sm:text-xl font-bold mb-4 text-white">Our Locations</h3>
             <ul className="space-y-3">
               {locations.map((location, index) => (
                 <li key={index} className="flex items-start gap-2">
                   <MapPin className="h-4 w-4 sm:h-5 sm:w-5 footer-primary flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-medium text-sm sm:text-base">{location.name}</p>
-                    <p className="text-xs sm:text-sm text-muted-foreground">{location.phone}</p>
+                    <p className="font-medium text-sm sm:text-base" style={{ color: "#e1e7ef" }}>{location.name}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground" style={{ color: "#b0b7c8" }}>{location.phone}</p>
                   </div>
                 </li>
               ))}
@@ -98,14 +108,14 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h3 className="text-lg sm:text-xl font-bold mb-4">Contact Us</h3>
+            <h3 className="text-lg sm:text-xl font-bold mb-4 text-white">Contact Us</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2">
                 <Mail className="h-4 w-4 sm:h-5 sm:w-5 footer-primary flex-shrink-0 mt-0.5" />
                 <a
                   href="mailto:info@naruladiagnostics.com"
-                  className="text-muted-foreground transition-colors footer-link-hover text-xs sm:text-sm break-all"
-                  style={{}}
+                  className="transition-colors footer-link-hover text-xs sm:text-sm break-all"
+                  style={{ color: "#fff" }}
                 >
                   info@naruladiagnostics.com
                 </a>
@@ -114,8 +124,8 @@ const Footer = () => {
                 <Phone className="h-4 w-4 sm:h-5 sm:w-5 footer-primary flex-shrink-0 mt-0.5" />
                 <a
                   href="tel:8000775100"
-                  className="text-muted-foreground transition-colors footer-link-hover text-xs sm:text-sm"
-                  style={{}}
+                  className="transition-colors footer-link-hover text-xs sm:text-sm"
+                  style={{ color: "#fff" }}
                 >
                   8000775100 (Gurugram)
                 </a>
@@ -124,8 +134,8 @@ const Footer = () => {
                 <Phone className="h-4 w-4 sm:h-5 sm:w-5 footer-primary flex-shrink-0 mt-0.5" />
                 <a
                   href="tel:9797973300"
-                  className="text-muted-foreground transition-colors footer-link-hover text-xs sm:text-sm"
-                  style={{}}
+                  className="transition-colors footer-link-hover text-xs sm:text-sm"
+                  style={{ color: "#fff" }}
                 >
                   9797973300 (Rohtak)
                 </a>
@@ -136,7 +146,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-border pt-6 sm:pt-8 text-center text-muted-foreground">
-          <p className="text-xs sm:text-sm">&copy; {new Date().getFullYear()} Narula Diagnostics. All rights reserved.</p>
+          <p className="text-xs sm:text-sm" style={{ color: "#a5afc4" }}>&copy; {new Date().getFullYear()} Narula Diagnostics. All rights reserved.</p>
         </div>
       </div>
     </footer>

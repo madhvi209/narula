@@ -20,34 +20,35 @@ const servicesData = {
     healthPackages: [
         {
             id: 1,
-            discount: "66% off",
-            title: "Energy Package",
+            discount: "20% off",
+            title: "Category 1 (Up to 30 Years)",
             testsCount: 15,
             description:
-                "Liver Function Test, 25 OH Cholecalciferol (D2+D3), Fasting Insulin & Glucose",
-            originalPrice: 4360,
-            price: 1500,
+                "Consultation & Check-up (By Post-graduate MD Doctors), Complete Haemogram (22 Parameters), Complete Urine Test, Blood Group, Blood Glucose (Fasting & PP), Blood Urea, Serum Creatinine, Lipid Profile, SGOT, SGPT, Ultrasound Whole Abdomen, Chest X-Ray (Digital), E.C.G., Thyroid Profile (T3, T4, TSH), Digital O.P.G. (Dental Status).",
+            originalPrice: 4080,
+            price: 3250,
         },
         {
             id: 2,
-            discount: "63% off",
-            title: "Gym Package - TN",
-            testsCount: 53,
+            discount: "21% off",
+            title: "Category 2 (Age 31–50 Years)",
+            testsCount: 16,
             description:
-                "Glyco Hemoglobin (HbA1c), Liver Function Test, TSH, Lipid Profile, Urea, Creatinine, Uric Acid, 25...",
-            originalPrice: 7815,
-            price: 2899,
+                "Consultation & Check-up (By Post-graduate MD Doctors), Complete Haemogram (22 Parameters), Complete Urine Test, Blood Group, Blood Glucose (Fasting & PP), Renal Profile (Urea, Creatinine, Uric Acid, Calcium, Phosphorus, Na & K), Liver Function Test (SGOT, PT, Bilirubin, T. Protein, Albumin, Globulin, A/G Ratio & Alkaline Phosphate), Lipid Profile, Ultrasound Whole Abdomen, Chest X-Ray (Digital), E.C.G., Thyroid Profile (T3, T4, TSH), Digital O.P.G. (Dental Status).",
+            originalPrice: 5050,
+            price: 4000,
         },
         {
             id: 3,
-            discount: "67% off",
-            title: "Her Advanced",
-            testsCount: 93,
+            discount: "20% off",
+            title: "Category 3 (Above 50 Years)",
+            testsCount: 18,
             description:
-                "CBC, ESR, Glucose - Fasting, Glucose - Post Prandial, Glyco Hemoglobin (HbA1c), Liver Functi...",
-            originalPrice: 12735,
-            price: 4199,
+                "Consultation & Check-up (By Post-graduate MD Doctors), Complete Haemogram (22 Parameters), Complete Urine Test, Blood Group, Blood Glucose (Fasting & PP), B.M.D. (Dexa Spine), Stool Test, Renal Profile (Urea, Creatinine, Uric Acid, Calcium, Phosphorus, Na & K), Liver Function Test (SGOT, PT, Bilirubin, T. Protein, Albumin, Globulin, A/G Ratio & Alkaline Phosphate), Lipid Profile, P.S.A. (Male), Pap Smear (Female), Ultrasound Whole Abdomen, Chest X-Ray (Digital), E.C.G., Thyroid Profile (T3, T4, TSH), Digital O.P.G. (Dental Status).",
+            originalPrice: 7150,
+            price: 5700,
         },
+
     ],
 
     pathologyTests: [

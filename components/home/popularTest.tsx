@@ -63,7 +63,8 @@ export default function FrequentlyBooked({ className }: { className?: string }) 
                         <div key={t.title} className="flex justify-center">
                             <article
                                 className={cn(
-                                    "test-card relative h-full rounded-2xl border px-5 xs:px-6 sm:px-8 py-6 min-w-[230px] xs:min-w-[270px] sm:min-w-[320px] md:min-w-[370px] max-w-[410px] transition-transform duration-200 group hover:scale-102 hover:shadow-xl scale-[0.97]"
+                                    // Changed min-w and px utility classes for small screens
+                                    "test-card relative h-full rounded-2xl border px-3 xs:px-4 sm:px-8 py-6 min-w-[170px] xs:min-w-[210px] sm:min-w-[320px] md:min-w-[370px] max-w-[410px] transition-transform duration-200 group hover:scale-102 hover:shadow-xl scale-[0.97]"
                                 )}
                                 style={{
                                     background: 'var(--primary-blue-light)',

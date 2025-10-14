@@ -64,8 +64,9 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
                     <div key={item.id} className="border rounded-lg p-3 sm:p-4">
                       <div className="flex justify-between items-start mb-3">
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-[#00A5D4] text-sm sm:text-base truncate">{item.ageGroup}</h3>
-                          <p className="text-xs sm:text-sm text-gray-600 truncate">{item.ageGroupHindi}</p>
+                          <h3 className="font-semibold text-[#00A5D4] text-sm sm:text-base truncate">{item.title}</h3>
+                          {item.ageGroup && <p className="text-xs sm:text-sm text-gray-600 truncate">{item.ageGroup}</p>}
+                          {item.ageGroupHindi && <p className="text-xs sm:text-sm text-gray-600 truncate">{item.ageGroupHindi}</p>}
                           <p className="text-xs text-gray-500">{item.category}</p>
                         </div>
                         <Button

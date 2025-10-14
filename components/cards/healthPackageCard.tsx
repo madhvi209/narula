@@ -1,8 +1,7 @@
 "use client";
 
 import { ShoppingCart } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useCart } from "@/contexts/CartContext";
+import { AddToCartButton } from "@/components/ui/add-to-cart-button";
 
 interface HealthPackageCardProps {
   ageGroup: string;
@@ -23,18 +22,17 @@ const HealthPackageCard = ({
   normalPrice,
   discountedPrice,
 }: HealthPackageCardProps) => {
-  // Ensure this is a client component by adding "use client" at the top
-  const { addToCart } = useCart();
-
-  const handleAddToCart = () => {
-    addToCart({
-      ageGroup,
-      ageGroupHindi,
-      category,
-      tests,
-      normalPrice,
-      discountedPrice,
-    });
+  const cartItem = {
+    type: 'health-package' as const,
+    title: ageGroup,
+    description: category,
+    category: 'Health Package',
+    normalPrice,
+    discountedPrice,
+    tests,
+    testsCount: tests.length,
+    ageGroup,
+    ageGroupHindi
   };
   return (
     <div className="bg-[#ffff] border rounded-xl p-4 sm:p-6 hover:shadow-xl transition-all duration-300 animate-fade-in h-full flex flex-col">
@@ -97,13 +95,14 @@ const HealthPackageCard = ({
           </span>
         </div>
         
-        <Button
-          onClick={handleAddToCart}
-          className="w-full bg-[#00A5D4] hover:bg-[#0088b3] text-white font-semibold py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
+        <AddToCartButton
+          item={cartItem}
+          variant="test-card"
+          className="w-full py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg text-sm sm:text-base"
         >
           <ShoppingCart className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           Add to Cart
-        </Button>
+        </AddToCartButton>
       </div>
     </div>
   );

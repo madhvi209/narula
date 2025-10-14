@@ -1,8 +1,7 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { TestTube, Droplet, Heart, Activity, Stethoscope, Scan, Wind, Shield, ShoppingCart } from "lucide-react"
-import { useCallback } from "react"
+import { AddToCartButton } from "../ui/add-to-cart-button"
 
 const PRIMARY_COLOR = "#00A5D4"; // Tailwind cyan-500
 //bg - [#00A5D4] hover: bg - [#0090b8] text - white
@@ -69,11 +68,6 @@ const packages: HealthPackage[] = [
 ]
 
 export default function HealthPackagesSection() {
-  // Dummy cart handler for demonstration
-  const handleAddToCart = useCallback((pkg: HealthPackage) => {
-    // Replace with your cart logic (e.g., context, redux, etc.)
-    alert(`Added "${pkg.category} (${pkg.ageRange})" to cart!`);
-  }, []);
 
   return (
     <section className="py-20 relative overflow-hidden">
@@ -174,13 +168,24 @@ export default function HealthPackagesSection() {
                       ₹{pkg.discountedPrice}
                     </span>
                   </div>
-                  <Button
-                    onClick={() => handleAddToCart(pkg)}
-                    className="w-full bg-[#00A5D4] hover:bg-[#0088b3] text-white font-semibold py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
+                  <AddToCartButton
+                    item={{
+                      type: 'health-package',
+                      title: `${pkg.category} (${pkg.ageRange})`,
+                      description: pkg.consultation,
+                      category: 'Health Package',
+                      normalPrice: pkg.normalPrice,
+                      discountedPrice: pkg.discountedPrice,
+                      tests: [...pkg.leftTests.map(t => t.name), ...pkg.rightTests.map(t => t.name)],
+                      testsCount: pkg.leftTests.length + pkg.rightTests.length,
+                      ageGroup: pkg.ageRange
+                    }}
+                    variant="test-card"
+                    className="w-full py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg text-sm sm:text-base"
                   >
                     <ShoppingCart className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     Add to Cart
-                  </Button>
+                  </AddToCartButton>
                 </div>
               </div>
             </div>

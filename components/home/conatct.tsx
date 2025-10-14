@@ -3,21 +3,13 @@
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { MapPin, Mail, Phone } from "lucide-react";
+import { MapPin, Mail, Phone, Youtube } from "lucide-react";
 import React from "react";
 
 // Import Lucide or custom SVG for social icons
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 
-// Blue shades for gradient use
-const BLUE_400 = "#39A9DB";
-const BLUE_500 = "#2079c5";
-const BLUE_600 = "#18629F";
-const BLUE_700 = "#12416C";
-const BLUE_100 = "#eaf6fb";
-const BLUE_200 = "#bee1ef";
-
-// Background style from health-concern.tsx (see file_context_0)
+// Background style for contact section
 const contactSectionBackground =
   "linear-gradient(102deg, #d3f3fa 15%, #e0f7fc 68%, #ffffff 100%)";
 
@@ -57,9 +49,9 @@ const SOCIALS = [
     url: "https://www.linkedin.com/"
   },
   {
-    name: "Twitter",
-    icon: Twitter,
-    url: "https://twitter.com/"
+    name: "Youtube",
+    icon: Youtube,
+    url: "https://www.youtube.com/@narularadiology6031"
   },
 ];
 
@@ -79,7 +71,7 @@ export default function ContactClientPage() {
                     <aside
                         className="md:w-[38%] w-full p-6 md:p-8 flex-shrink-0"
                         style={{
-                            background: `linear-gradient(135deg, ${BLUE_600}, ${BLUE_500}, ${BLUE_400})`,
+                            background: `linear-gradient(135deg, var(--primary-blue-darker), var(--primary-blue-dark), var(--primary-blue))`,
                             color: "#fff",
                         }}
                         aria-labelledby="contact-left-title"
@@ -181,7 +173,7 @@ export default function ContactClientPage() {
                         className="md:w-[62%] w-full p-6 md:p-10"
                         aria-labelledby="contact-form-title"
                         style={{
-                            background: `linear-gradient(110deg, #fff 75%, ${BLUE_100} 100%)`,
+                            background: `linear-gradient(110deg, #fff 75%, var(--primary-blue-light) 100%)`,
                         }}
                     >
                         <header className="mb-6">
@@ -189,7 +181,7 @@ export default function ContactClientPage() {
                                 id="contact-form-title"
                                 className="text-2xl md:text-3xl font-semibold text-balance"
                                 style={{
-                                    background: `linear-gradient(90deg, ${BLUE_600}, ${BLUE_400})`,
+                                    background: `linear-gradient(90deg, var(--primary-blue-darker), var(--primary-blue))`,
                                     WebkitBackgroundClip: "text",
                                     WebkitTextFillColor: "transparent",
                                 }}
@@ -239,10 +231,8 @@ export default function ContactClientPage() {
                             <div className="pt-2 flex justify-end">
                                 <button
                                     type="submit"
-                                    className="font-semibold px-6 py-1.5 rounded-lg transition-colors duration-200 shadow-[var(--shadow-button)] hover:brightness-110 hover:scale-[1.03] hover:shadow-lg flex justify-center items-center gap-2 text-white"
+                                    className="btn-primary"
                                     style={{
-                                        background: "linear-gradient(to right, #00A5D4, #2079c5, #134471)",
-                                        color: "#fff",
                                         minWidth: "110px",
                                         height: "36px",
                                     }}

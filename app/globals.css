@@ -190,3 +190,113 @@
     .text-custom-blue700 { color: var(--blue-700); }
     .bg-custom-blue900 { background: var(--blue-900); }
 */
+
+/* Reusable Button Styles */
+@layer components {
+  /* Primary Blue Button */
+  .btn-primary {
+    @apply font-semibold px-4 md:px-6 py-2 rounded transition-all duration-200 shadow-[var(--shadow-button)] hover:brightness-110 hover:scale-[1.03] hover:shadow-lg;
+    background: linear-gradient(to right, #00A5D4, #2079c5, #134471);
+    color: #fff;
+  }
+
+  /* Add to Cart Button */
+  .btn-add-to-cart {
+    @apply font-semibold px-4 md:px-6 py-2 rounded transition-all duration-200 shadow-[var(--shadow-button)] hover:brightness-110 hover:scale-[1.03] hover:shadow-lg;
+    background: linear-gradient(to right, #00A5D4, #2079c5, #134471);
+    color: #fff;
+  }
+
+  /* View All Button */
+  .btn-view-all {
+    @apply font-semibold px-4 md:px-6 py-2 rounded transition-all duration-200 shadow-[var(--shadow-button)] hover:brightness-110 hover:scale-[1.03] hover:shadow-lg;
+    background: linear-gradient(to right, #00A5D4, #2079c5, #134471);
+    color: #fff;
+  }
+
+  /* Category Toggle Button */
+  .btn-category {
+    @apply font-semibold px-4 md:px-6 py-2 rounded transition-all duration-200;
+  }
+
+  .btn-category.selected {
+    background: linear-gradient(to right, #00A5D4, #2079c5, #134471);
+    color: #fff;
+    outline: 2px solid #134471;
+    box-shadow: 0 2px 8px 0 rgba(32, 121, 197, 0.16);
+  }
+
+  .btn-category.unselected {
+    background: transparent;
+    color: #2b8dad;
+    outline: none;
+  }
+
+  /* Card Styles */
+  .card-primary {
+    @apply relative overflow-hidden border shadow transition-all duration-300 flex flex-col h-full;
+    background: linear-gradient(120deg, #fff 0%, #f0faff 100%);
+    border-color: #eaf5fd;
+  }
+
+  /* Discount Tag */
+  .discount-tag {
+    @apply absolute top-3 left-3 z-10;
+    width: 66px;
+    height: 32px;
+    pointer-events: none;
+  }
+
+  /* Add Button for Test Cards */
+  .btn-add-test {
+    @apply absolute -top-3 -right-3 grid w-16 h-9 place-items-center rounded-md shadow flex items-center justify-center gap-1 border transition-colors duration-200 overflow-hidden text-white;
+    background: linear-gradient(to right, #00A5D4, #2079c5, #134471);
+    border-color: #bfe1ff;
+    box-shadow: 0 2px 6px rgba(36,137,209,0.10);
+  }
+
+  .btn-add-test:hover,
+  .btn-add-test:focus-visible {
+    background: linear-gradient(to right, #2079c5, #134471, #0090b8) !important;
+  }
+
+  /* Test Card Hover Effects */
+  .test-card:hover,
+  .test-card:focus-visible {
+    transform: scale(1.015) !important;
+    box-shadow: 0 6px 30px rgba(36,137,209,0.12);
+  }
+
+  .test-card:focus-visible {
+    outline: 2px solid #2079c5;
+    outline-offset: 2px;
+    z-index: 2;
+  }
+
+  /* Section Backgrounds */
+  .section-bg-gradient {
+    background: linear-gradient(120deg, #fff 0%, #f0faff 100%);
+  }
+
+  .section-bg-gradient-alt {
+    background: linear-gradient(125deg, #f0faff 80%, #ffffff 100%);
+  }
+
+  /* Text Gradients */
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, #2079c5, #00A5D4, #0090b8);
+  }
+
+  /* Color Variables for Consistent Usage */
+  :root {
+    --primary-blue: #00A5D4;
+    --primary-blue-dark: #2079c5;
+    --primary-blue-darker: #134471;
+    --primary-blue-accent: #0090b8;
+    --primary-blue-light: #f0faff;
+    --primary-blue-lighter: #eaf5fd;
+    --primary-blue-border: #bfe1ff;
+    --primary-blue-text: #2b8dad;
+  }
+}

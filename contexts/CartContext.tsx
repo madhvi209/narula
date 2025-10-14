@@ -1,16 +1,39 @@
 "use client";
 
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { CartItem, CartContextType } from '@/lib/types/cart';
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
+
+const CART_STORAGE_KEY = 'narula-cart-items';
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
+  // Load cart from localStorage on mount
+  useEffect(() => {
+    try {
+      const savedItems = localStorage.getItem(CART_STORAGE_KEY);
+      if (savedItems) {
+        setItems(JSON.parse(savedItems));
+      }
+    } catch (error) {
+      console.error('Failed to load cart from localStorage:', error);
+    }
+  }, []);
+
+  // Save cart to localStorage whenever items change
+  useEffect(() => {
+    try {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+    } catch (error) {
+      console.error('Failed to save cart to localStorage:', error);
+    }
+  }, [items]);
+
   const addToCart = useCallback((newItem: Omit<CartItem, 'id' | 'quantity'>) => {
-    const itemId = `${newItem.category}-${newItem.ageGroup}`;
+    const itemId = `${newItem.type}-${newItem.category}-${newItem.title}`.replace(/\s+/g, '-').toLowerCase();
     
     setItems(prevItems => {
       const existingItem = prevItems.find(item => item.id === itemId);

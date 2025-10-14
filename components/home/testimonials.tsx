@@ -5,18 +5,13 @@ import { Card } from "@/components/ui/card";
 import { motion, useAnimation } from "framer-motion";
 import React, { useRef, useEffect, useState } from "react";
 
-// New dark blue palette and gray for dark theme
+// Using global CSS variables for consistent styling
 const DARK_BG_START = "#151a23";      // Very dark blue-gray
 const DARK_BG_MID = "#222e3e";        // Mid dark blue
 const DARK_BG_END = "#223455";        // Deep blue
-const DARK_ACCENT_1 = "#2079c5";      // For gradients/star-clip/ribbons
-const DARK_ACCENT_2 = "#00A5D4";      // For gradients
-
 const CARD_BG_DARK = "#232b38";
 const CARD_BG_DARK2 = "#242f43";
-const RIBBON_GRADIENT = `linear-gradient(90deg, ${DARK_ACCENT_1} 80%, ${DARK_ACCENT_2} 100%)`;
-
-const TITLE_GRAD = `linear-gradient(to right, ${DARK_ACCENT_1}, ${DARK_ACCENT_2}, ${DARK_BG_END})`;
+const RIBBON_GRADIENT = `linear-gradient(90deg, var(--primary-blue-dark) 80%, var(--primary-blue) 100%)`;
 const TITLE_COLOR = "#d8e3f4";
 
 // Star yellow/orange gradient
@@ -140,21 +135,23 @@ export default function TestimonialsSection() {
 
   const speed = totalScrollWidth / TRANSITION_DURATION;
 
-  // Wrap the animateScroll logic so controls.set is never called before mount
+  // Track mount status
   const isMountedRef = useRef(false);
+  // Track scroll position for the animation
+  const lastXRef = useRef(0);
 
-  function animateScroll(timestamp: number) {
+  // Animate X scroll and update lastXRef only (never calling controls.set directly here)
+  function animateScrollFrame(timestamp: number) {
     if (startRef.current === null) startRef.current = timestamp;
     const timeDelta = (timestamp - startRef.current) / 1000 + elapsedWhenPausedRef.current;
     const x = -((timeDelta * speed) % totalScrollWidth);
-    if (isMountedRef.current) {
-      controls.set({ x });
-    }
+    lastXRef.current = x;
     if (!isPaused) {
-      rafIdRef.current = requestAnimationFrame(animateScroll);
+      rafIdRef.current = requestAnimationFrame(animateScrollFrame);
     }
   }
 
+  // Set the mount status ref
   useEffect(() => {
     isMountedRef.current = true;
     return () => {
@@ -162,6 +159,7 @@ export default function TestimonialsSection() {
     };
   }, []);
 
+  // Start/stop the scroll animation on pause state or scroll params change, but do NOT call controls.set in here
   useEffect(() => {
     if (isPaused) {
       if (startRef.current !== null) {
@@ -173,7 +171,7 @@ export default function TestimonialsSection() {
       startRef.current = null;
     } else {
       startRef.current = null;
-      rafIdRef.current = requestAnimationFrame(animateScroll);
+      rafIdRef.current = requestAnimationFrame(animateScrollFrame);
     }
     return () => {
       if (rafIdRef.current !== null) {
@@ -183,13 +181,36 @@ export default function TestimonialsSection() {
       startRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPaused, totalScrollWidth, speed, controls]);
+  }, [isPaused, totalScrollWidth, speed]);
 
+  // Use effect for animation updates: only call controls.set AFTER mount, via requestAnimationFrame loop
   useEffect(() => {
-    // Reset on unmount
+    let running = true;
+    let prevX = lastXRef.current;
+    function onTickRAF() {
+      if (!running) return;
+      if (isMountedRef.current) {
+        // Only set if changed for perf
+        if (lastXRef.current !== prevX) {
+          controls.set({ x: lastXRef.current });
+          prevX = lastXRef.current;
+        }
+      }
+      requestAnimationFrame(onTickRAF);
+    }
+    requestAnimationFrame(onTickRAF);
+    return () => {
+      running = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [controls]);
+
+  // Reset all refs on unmount
+  useEffect(() => {
     return () => {
       elapsedWhenPausedRef.current = 0;
       startRef.current = null;
+      lastXRef.current = 0;
     };
   }, []);
 
@@ -204,7 +225,7 @@ export default function TestimonialsSection() {
           color: #fff;
         }
         .testimonial-ribbon-tail {
-          background: ${DARK_ACCENT_1};
+          background: var(--primary-blue-dark);
         }
         .testimonial-card-bg {
           background: ${QUOTE_CARD_BG_GRADIENT};

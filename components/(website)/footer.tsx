@@ -66,7 +66,12 @@ const Footer = () => {
               <a href="#" className="h-8 w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center footer-primary-bg footer-primary-bg-hover transition-colors">
                 <Linkedin className="h-4 w-4 sm:h-5 sm:w-5 footer-primary" />
               </a>
-              <a href="#" className="h-8 w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center footer-primary-bg footer-primary-bg-hover transition-colors">
+              <a
+                href="https://www.youtube.com/@narularadiology6031"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-8 w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center footer-primary-bg footer-primary-bg-hover transition-colors"
+              >
                 <Youtube className="h-4 w-4 sm:h-5 sm:w-5 footer-primary" />
               </a>
             </div>

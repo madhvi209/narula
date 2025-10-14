@@ -1,11 +1,15 @@
 export interface CartItem {
   id: string;
-  ageGroup: string;
-  ageGroupHindi: string;
+  type: 'health-package' | 'test' | 'radiology';
+  title: string;
+  description?: string;
   category: string;
   normalPrice: number;
   discountedPrice: number;
-  tests: string[];
+  tests?: string[];
+  testsCount?: number;
+  ageGroup?: string;
+  ageGroupHindi?: string;
   quantity: number;
 }
 

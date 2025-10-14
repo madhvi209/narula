@@ -3,11 +3,7 @@
 import { motion, useAnimation } from "framer-motion"
 import React, { useRef, useState } from "react"
 
-// Only keeping used color constants
-const BLUE_500 = "#2079c5";
-const BLUE_600 = "#134471";
-const BLUE_800 = "#0090b8";
-const BLUE_400 = "#00A5D4";
+// Using global CSS variables for consistent styling
 
 // Array of reasons - unchanged
 const reasons = [
@@ -66,6 +62,7 @@ export function WhyChooseSection() {
     // Animation controls
     const controls = useAnimation();
     const [isPaused, setIsPaused] = useState(false);
+    const [hasMounted, setHasMounted] = useState(false);
 
     // Card and layout dimensions
     const cardWidth = 370, cardHeight = 430, gapPx = 32;
@@ -80,18 +77,26 @@ export function WhyChooseSection() {
 
     const speed = totalScrollWidth / TRANSITION_DURATION;
 
+    // Set hasMounted to true after mount
+    React.useEffect(() => {
+        setHasMounted(true);
+    }, []);
+
     // The actual animation function
     function animateScroll(timestamp: number) {
         if (startRef.current === null) startRef.current = timestamp;
         const timeDelta = (timestamp - startRef.current) / 1000 + elapsedWhenPausedRef.current; // total elapsed in seconds
         const x = -((timeDelta * speed) % totalScrollWidth);
-        controls.set({ x });
+        if (hasMounted) {
+            controls.set({ x });
+        }
         if (!isPaused) {
             rafIdRef.current = requestAnimationFrame(animateScroll);
         }
     }
 
     React.useEffect(() => {
+        if (!hasMounted) return;
         if (isPaused) {
             // Animation paused, record how much time has elapsed so far
             if (startRef.current !== null) {
@@ -114,7 +119,7 @@ export function WhyChooseSection() {
             startRef.current = null;
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isPaused, totalScrollWidth, speed, controls]);
+    }, [isPaused, totalScrollWidth, speed, controls, hasMounted]);
 
     // Pause/resume scroll on hover ONLY for the cards area
     const onMouseEnter = () => setIsPaused(true);
@@ -149,17 +154,9 @@ export function WhyChooseSection() {
                     viewport={{ once: true }}
                     className="text-left mb-10" // reduce bottom margin between title and slider
                 >
-                    <h2 className="text-[24px] sm:text-[27px] md:text-[40px] font-semibold mb-3" style={{ color: BLUE_600 }}>
+                    <h2 className="text-[24px] sm:text-[27px] md:text-[40px] font-semibold mb-3" style={{ color: 'var(--primary-blue-darker)' }}>
                         Why We{" "}
-                        <span
-                            className="bg-clip-text text-transparent"
-                            style={{
-                                backgroundImage: `linear-gradient(to right, ${BLUE_400}, ${BLUE_500}, ${BLUE_800})`,
-                                WebkitBackgroundClip: "text",
-                                WebkitTextFillColor: "transparent",
-                                display: "inline-block"
-                            }}
-                        >
+                        <span className="text-gradient-primary">
                             Choose Narula Center
                         </span>
                     </h2>
@@ -224,10 +221,10 @@ export function WhyChooseSection() {
                                 </div>
                                 {/* Title & Desc Area */}
                                 <div className="flex flex-col items-center px-6 py-4 flex-1 w-full bg-gray-100">
-                                    <div className="font-bold text-base md:text-lg text-[#134471] text-center leading-tight mb-2">
+                                    <div className="font-bold text-base md:text-lg text-center leading-tight mb-2" style={{ color: 'var(--primary-blue-darker)' }}>
                                         {reason.title}
                                     </div>
-                                    <div className="text-xs md:text-sm text-[#134471] text-center font-normal">
+                                    <div className="text-xs md:text-sm text-center font-normal" style={{ color: 'var(--primary-blue-darker)' }}>
                                         {reason.description}
                                     </div>
                                 </div>

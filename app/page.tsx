@@ -13,7 +13,7 @@ import HealthConcernsSection from "@/components/home/health-concern";
 import ContactClientPage from "@/components/home/conatct";
 import MriCtSection from "@/components/home/mriCt";
 import Gallery from "@/components/home/gallery";
-import Banner from "@/components/home/banner";
+
 
 export default function Home() {
   return (

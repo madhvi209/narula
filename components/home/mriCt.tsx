@@ -2,7 +2,7 @@ import React from "react";
 
 export default function MriCtSection() {
     return (
-        <section className="py-20 mt-10 mb-18">
+        <section className="py-20 mt-10 mb-0">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
                     <h2 className="text-[24px] sm:text-[27px] md:text-[39px] font-semibold mb-3 text-gray-800">

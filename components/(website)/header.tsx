@@ -81,46 +81,6 @@ export function Header() {
     }
   }
 
-  /**
-   * HideOnScroll: shows/hides its children based on scroll
-   * (No controls.set()/animation is present here, but if you added one, it should go in useEffect)
-   */
-  function HideOnScroll({ children }: { children: React.ReactNode }) {
-    const [show, setShow] = useState(true)
-    const [lastScrollY, setLastScrollY] = useState(0)
-
-    useEffect(() => {
-      const handleScroll = () => {
-        const currentScrollY = window.scrollY
-        if (currentScrollY < 50) {
-          setShow(true)
-        } else if (currentScrollY > lastScrollY) {
-          setShow(false)
-        } else {
-          setShow(true)
-        }
-        setLastScrollY(currentScrollY)
-      }
-      window.addEventListener("scroll", handleScroll)
-      return () => window.removeEventListener("scroll", handleScroll)
-    }, [lastScrollY])
-
-    return (
-      <div
-        style={{
-          transition:
-            "transform 0.3s cubic-bezier(.4,0,.2,1), opacity 0.3s cubic-bezier(.4,0,.2,1)",
-          transform: show ? "translateY(0)" : "translateY(-100%)",
-          opacity: show ? 1 : 0,
-          zIndex: 30, // lower than dropdown
-          position: "relative",
-        }}
-      >
-        {children}
-      </div>
-    )
-  }
-
   // Location icon SVG for city selector
   const LocationIcon = () => (
     <svg
@@ -147,11 +107,83 @@ export function Header() {
 
   return (
     <>
-      <header className="bg-gray-800 border-b sticky top-0 z-50">
+      <header className="bg-gray-100 border-b sticky top-0 z-50">
+        {/* Search Bar & Online Report */}
+        {isClient && (
+          <div className="bg-white border-b relative z-30 p-2">
+            <div className="mx-auto px-0.5 w-full max-w-5xl flex flex-col md:flex-row items-stretch md:items-center gap-1 py-1.5">
+              {/* Search Box */}
+              <form
+                onSubmit={handleSearch}
+                className="flex flex-1 w-full md:w-auto gap-0"
+                role="search"
+              >
+                {/* City Selector */}
+                <div className="flex items-center border border-[#00A5D4] bg-[#f0faff] rounded-l-md pr-0.5 h-8 md:h-10 min-w-[70px] md:min-w-[140px]">
+                  <span className="w-4 h-4 md:w-5 md:h-5 flex items-center justify-center">
+                    <LocationIcon />
+                  </span>
+                  <select
+                    className="bg-transparent outline-none text-[#14486d] font-medium text-xs md:text-base"
+                    style={{ minWidth: 45 }}
+                    value={searchValue.city}
+                    onChange={e =>
+                      setSearchValue(prev => ({
+                        ...prev,
+                        city: e.target.value,
+                      }))
+                    }
+                  >
+                    <option value="">Select City</option>
+                    <option value="Gurgaon">Gurgaon</option>
+                    <option value="Rohtak">Rohtak</option>
+                  </select>
+                </div>
+                {/* Test Search */}
+                <div className="flex flex-1 items-center border-t border-b border-[#00A5D4] bg-[#f0faff] h-8 md:h-10 min-w-[70px] md:min-w-[180px]">
+                  <Search className="w-4 h-4 text-[#00A5D4] ml-1 mr-1 md:w-5 md:h-5 md:ml-2" />
+                  <input
+                    type="text"
+                    placeholder="Search Tests"
+                    value={searchValue.test}
+                    onChange={e =>
+                      setSearchValue(prev => ({
+                        ...prev,
+                        test: e.target.value,
+                      }))
+                    }
+                    className="bg-transparent outline-none flex-1 text-[#14486d] font-medium text-xs md:text-base"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="bg-[#00A5D4] hover:bg-[#0090b8] text-white px-1.5 md:px-3 h-8 md:h-10 flex items-center font-semibold text-xs md:text-base border border-[#00A5D4] border-l-0 rounded-l-none rounded-r-md min-w-[36px] md:min-w-[48px]"
+                >
+                  <span className="hidden md:inline">Search</span>
+                  <Search className="w-4 h-4 md:w-5 md:h-5 md:ml-0" />
+                </Button>
+              </form>
+              {/* Online Report */}
+              <Button
+                asChild
+                className="ml-0 md:ml-3 bg-gradient-to-r from-[#6acce7] to-[#14486d] hover:from-[#0090b8] hover:to-[#14486d] text-white px-2 md:px-5 h-8 md:h-10 text-xs md:text-base font-semibold rounded-lg min-w-[70px] md:min-w-[auto]"
+              >
+                <a
+                  href="https://www.naruladiagnostics.com/online-report"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Online Report
+                </a>
+              </Button>
+            </div>
+          </div>
+        )}
+
         <div className="mx-auto px-4 w-full max-w-6xl">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <div className="bg-white rounded-lg px-3 py-1 flex items-center">
+            <div className=" rounded-lg px-3 py-1 flex items-center">
               <Link href="/" className="flex items-center gap-2 flex-shrink-0">
                 <img
                   src="/images/logo.png"
@@ -165,13 +197,13 @@ export function Header() {
             <nav className="hidden lg:flex items-center gap-8 relative z-50">
               <a
                 href="/"
-                className="text-white text-sm font-medium hover:text-[#0B4A8C] transition-colors"
+                className="text-[#0B4A8C] text-sm font-medium hover:text-[#52CCF6] transition-colors"
               >
                 Home
               </a>
               <a
                 href="#about"
-                className="text-white text-sm font-medium hover:text-[#0B4A8C] transition-colors"
+                className="text-[#0B4A8C] text-sm font-medium hover:text-[#52CCF6] transition-colors"
               >
                 About Us
               </a>
@@ -184,7 +216,7 @@ export function Header() {
                 onMouseLeave={() => setOpenDropdown(null)}
               >
                 <button
-                  className="flex items-center gap-1 text-white text-sm font-medium hover:text-[#0B4A8C] transition-colors focus:outline-none bg-transparent border-none p-0"
+                  className="flex items-center gap-1 text-[#0B4A8C] text-sm font-medium hover:text-[#52CCF6] transition-colors focus:outline-none bg-transparent border-none p-0"
                   type="button"
                   aria-haspopup="true"
                   aria-expanded={openDropdown === "tests"}
@@ -221,7 +253,7 @@ export function Header() {
                 onMouseLeave={() => setOpenDropdown(null)}
               >
                 <button
-                  className="flex items-center gap-1 text-white text-sm font-medium hover:text-[#0B4A8C] transition-colors focus:outline-none bg-transparent border-none p-0"
+                  className="flex items-center gap-1 text-[#0B4A8C] text-sm font-medium hover:text-[#52CCF6] transition-colors focus:outline-none bg-transparent border-none p-0"
                   type="button"
                   aria-haspopup="true"
                   aria-expanded={openDropdown === "services"}
@@ -250,7 +282,7 @@ export function Header() {
 
               <a
                 href="#quick-links"
-                className="text-white text-sm font-medium hover:text-[#0B4A8C] transition-colors"
+                className="text-[#0B4A8C] text-sm font-medium hover:text-[#52CCF6] transition-colors"
               >
                 Quick Links
               </a>
@@ -271,13 +303,13 @@ export function Header() {
                   </Badge>
                 )}
               </Button>
-              <Button className="text-base font-semibold shadow-xl bg-gradient-to-r from-[#00a5d4] to-[#0a3d62] hover:from-[#0a3d62] hover:to-[#00a5d4] text-white h-12 px-6 min-w-[120px]">
+              <Button className="text-base font-semibold shadow-xl bg-gradient-to-r from-[#00a5d4] to-[#0a3d62] hover:from-[#0a3d62] hover:to-[#00a5d4] text-white h-11 px-6 min-w-[120px]">
                 <Phone className="w-4 h-4 lg:w-5 lg:h-5 mr-0.5" />
                 <span className="hidden sm:inline">Contact</span>
               </Button>
               <Button 
                 onClick={handleLogin}
-                className="bg-white text-[#00A5D4] border border-[#00A5D4] hover:bg-[#90bfca] h-12 px-6 min-w-[120px] flex items-center gap-2"
+                className="bg-white text-[#00A5D4] border border-[#00A5D4] hover:bg-[#90bfca] h-11 px-6 min-w-[120px] flex items-center gap-2"
               >
                 <LogIn className="w-4 h-4" />
                 <span className="hidden sm:inline">Login</span>
@@ -311,80 +343,7 @@ export function Header() {
           </div>
         </div>
 
-        {/* Search Bar & Online Report */}
-        {isClient && (
-          <HideOnScroll>
-            <div className="bg-white border-b relative z-30">
-              <div className="mx-auto px-0.5 w-full max-w-5xl flex flex-col md:flex-row items-stretch md:items-center gap-1 py-1.5">
-                {/* Search Box */}
-                <form
-                  onSubmit={handleSearch}
-                  className="flex flex-1 w-full md:w-auto gap-0"
-                  role="search"
-                >
-                  {/* City Selector */}
-                  <div className="flex items-center border border-[#00A5D4] bg-[#f0faff] rounded-l-md pr-0.5 h-8 md:h-10 min-w-[70px] md:min-w-[140px]">
-                    <span className="w-4 h-4 md:w-5 md:h-5 flex items-center justify-center">
-                      <LocationIcon />
-                    </span>
-                    <select
-                      className="bg-transparent outline-none text-[#14486d] font-medium text-xs md:text-base"
-                      style={{ minWidth: 45 }}
-                      value={searchValue.city}
-                      onChange={e =>
-                        setSearchValue(prev => ({
-                          ...prev,
-                          city: e.target.value,
-                        }))
-                      }
-                    >
-                      <option value="">Select City</option>
-                      <option value="Gurgaon">Gurgaon</option>
-                      <option value="Rohtak">Rohtak</option>
-                    </select>
-                  </div>
-                  {/* Test Search */}
-                  <div className="flex flex-1 items-center border-t border-b border-[#00A5D4] bg-[#f0faff] h-8 md:h-10 min-w-[70px] md:min-w-[180px]">
-                    <Search className="w-4 h-4 text-[#00A5D4] ml-1 mr-1 md:w-5 md:h-5 md:ml-2" />
-                    <input
-                      type="text"
-                      placeholder="Search Tests"
-                      value={searchValue.test}
-                      onChange={e =>
-                        setSearchValue(prev => ({
-                          ...prev,
-                          test: e.target.value,
-                        }))
-                      }
-                      className="bg-transparent outline-none flex-1 text-[#14486d] font-medium text-xs md:text-base"
-                    />
-                  </div>
-                  <Button
-                    type="submit"
-                    className="bg-[#00A5D4] hover:bg-[#0090b8] text-white px-1.5 md:px-3 h-8 md:h-10 flex items-center font-semibold text-xs md:text-base border border-[#00A5D4] border-l-0 rounded-l-none rounded-r-md min-w-[36px] md:min-w-[48px]"
-                  >
-                    <span className="hidden md:inline">Search</span>
-                    <Search className="w-4 h-4 md:w-5 md:h-5 md:ml-0" />
-                  </Button>
-                </form>
-                {/* Online Report */}
-                <Button
-                  asChild
-                  className="ml-0 md:ml-3 bg-gradient-to-r from-[#6acce7] to-[#14486d] hover:from-[#0090b8] hover:to-[#14486d] text-white px-2 md:px-5 h-8 md:h-10 text-xs md:text-base font-semibold rounded-lg min-w-[70px] md:min-w-[auto]"
-                >
-                  <a
-                    href="https://www.naruladiagnostics.com/online-report"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Online Report
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </HideOnScroll>
-        )}
-
+       
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden border-t bg-white relative z-40">

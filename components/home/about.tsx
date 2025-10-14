@@ -30,7 +30,7 @@ const statsConfig = [
         label: "Diagnostic Centers",
         format: (val: number) => `${val}`,
         start: 1,
-        end: 4,
+        end: 3,
         step: 1,
         interval: 420, // SLOWED DOWN
     },

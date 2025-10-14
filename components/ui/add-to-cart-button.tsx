@@ -9,13 +9,15 @@ interface AddToCartButtonProps {
   variant?: 'default' | 'icon' | 'test-card';
   className?: string;
   children?: React.ReactNode;
+  size?: 'sm' | 'md' | 'lg'; // New "size" prop
 }
 
 export function AddToCartButton({ 
   item, 
   variant = 'default', 
   className = '', 
-  children 
+  children,
+  size = "md", // Default size is 'md'
 }: AddToCartButtonProps) {
   const { addToCart } = useCart();
 
@@ -23,17 +25,34 @@ export function AddToCartButton({
     addToCart(item);
   };
 
+  // Map the size prop to Tailwind or custom classes
+  const getSizeClass = () => {
+    switch (size) {
+      case "sm":
+        return "px-2 py-1 text-xs";
+      case "lg":
+        return "px-5 py-3 text-lg";
+      case "md":
+      default:
+        return "px-3 py-2 text-sm";
+    }
+  };
+
   if (variant === 'icon') {
     return (
       <button
         aria-label={`Add ${item.title} to cart`}
         onClick={handleAddToCart}
-        className={`btn-add-test ${className}`}
+        className={`btn-add-test ${getSizeClass()} ${className}`}
         tabIndex={-1}
       >
         <span className="flex items-center gap-1">
-          <Plus className="w-5 h-5" />
-          <span className="text-xs font-medium ml-1 hidden md:inline">Add</span>
+          <Plus className={size === "sm" ? "w-3 h-3" : size === "lg" ? "w-6 h-6" : "w-4 h-4"} />
+          <span 
+            className={`font-medium ml-1 hidden md:inline ${
+              size === "sm" ? "text-[10px]" : size === "lg" ? "text-[15px]" : "text-[12px]"
+            }`}
+          >Add</span>
         </span>
       </button>
     );
@@ -44,11 +63,10 @@ export function AddToCartButton({
       <button
         aria-label={`Add ${item.title} to cart`}
         onClick={handleAddToCart}
-        className={`btn-add-to-cart ${className}`}
+        className={`btn-add-to-cart ${getSizeClass()} ${className}`}
       >
         {children || (
           <>
-            
             Add to Cart
           </>
         )}
@@ -59,11 +77,10 @@ export function AddToCartButton({
   return (
     <button
       onClick={handleAddToCart}
-      className={`btn-primary ${className}`}
+      className={`btn-primary ${getSizeClass()} ${className}`}
     >
       {children || (
         <>
-          <ShoppingCart className="h-4 w-4 mr-2" />
           Add to Cart
         </>
       )}

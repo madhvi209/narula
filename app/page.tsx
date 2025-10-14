@@ -13,6 +13,7 @@ import HealthConcernsSection from "@/components/home/health-concern";
 import ContactClientPage from "@/components/home/conatct";
 import MriCtSection from "@/components/home/mriCt";
 import Gallery from "@/components/home/gallery";
+import CertificationsSection from "@/components/home/certifications";
 
 
 export default function Home() {
@@ -32,6 +33,7 @@ export default function Home() {
       <Gallery/>
       <TestimonialsSection />
       <MriCtSection />
+      <CertificationsSection/>
       <ContactClientPage />
 
 

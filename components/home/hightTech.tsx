@@ -17,7 +17,7 @@ const hitechEquipments = [
   {
     title: "MRI Machine",
     subtitle: "Advanced imaging for detailed body scans",
-    img: "/images/mri.png",
+    img: "/images/MRI.png",
   },
   {
     title: "CT Scanner",

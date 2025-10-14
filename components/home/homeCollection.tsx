@@ -264,13 +264,17 @@ const HomeBooking = () => {
           })}
         </div>
 
-        <div className="flex justify-end mt-2">
-          {!showAll && servicesData[activeCategory].length > visibleItems.length && (
-            <Button className="btn-view-all" onClick={() => setShowAll(true)} type="button">
-              View All
+        {/* View All Button */}
+        <div className="w-full max-w-[1180px] mx-auto mt-7">
+          <div className="flex justify-end">
+            <Button className="btn-view-all" asChild>
+              <a href="#" aria-label="View all frequently booked tests" tabIndex={0}>
+                View All
+              </a>
             </Button>
-          )}
+          </div>
         </div>
+
       </div>
     </section>
   );

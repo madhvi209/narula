@@ -126,7 +126,7 @@ const HeroSection = () => {
             <div className="relative z-30 max-w-[1240px] mx-auto flex flex-col min-h-[20vh] px-4 pt-20 md:pt-26">
                 {/* Heading & Buttons */}
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full">
-                    <div className="flex flex-col gap-6 md:gap-7 max-w-xl -mt-10 relative z-40">
+                    <div className="flex flex-col gap-6 md:gap-7 max-w-xl -mt-9 relative z-40">
                         <h1 className="leading-tight drop-shadow-2xl mb-2">
                             <span className="block text-white text-[5rem] md:text-4xl lg:text-7xl font-extrabold">
                                 Bringing <span className="text-[#20bffb] drop-shadow-[0_1px_16px_rgba(33,203,255,0.4)]">Health</span>

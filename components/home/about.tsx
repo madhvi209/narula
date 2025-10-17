@@ -198,7 +198,7 @@ export function AboutSection() {
                         {/* Large main image */}
                         <div className="relative rounded-2xl shadow-2xl overflow-hidden w-full max-w-[480px] aspect-[4/3] bg-[#e6f0fa]" style={{ minHeight: isMobile ? "300px" : "500px" }}>
                             <img
-                                src="/images/narula.jpeg"
+                                src="/images/about.png"
                                 alt="Narula Diagnostics Center"
                                 className="w-full h-full object-cover rounded-2xl"
                                 style={{ minHeight: isMobile ? "300px" : "500px", height: isMobile ? "40px" : "50px" }}
@@ -210,7 +210,7 @@ export function AboutSection() {
                         {!isMobile && (
                             <div className="absolute -bottom-10 -left-10 shadow-xl rounded-xl overflow-hidden border-4 border-white bg-white w-48 aspect-[4/3]">
                                 <img
-                                    src="/images/about.png"
+                                    src="/images/narula.jpeg"
                                     alt="Diagnostic Center"
                                     className="w-full h-full object-cover"
                                 />

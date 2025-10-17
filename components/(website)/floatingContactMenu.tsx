@@ -11,7 +11,7 @@ export default function FloatingContactMenu() {
 
     return (
         <div
-            className="fixed right-6 top-1/2 z-50 flex flex-col items-end"
+            className="fixed right-6 top-1/2 z-50 flex flex-col items-end mr-1"
             style={{ transform: "translateY(-50%)" }}
         >
             <Button

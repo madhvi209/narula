@@ -17,10 +17,11 @@ const BLUE_800 = "#0090b8";    // Secondary accent
 const experts = [
     {
         img: "/images/DrArjun.jpeg",
-        name: "Dr. Arjun Narula",
-        role: "Senior Radiologist",
-        desc: "M.B.B.S., M.D. (Radio-Diagnosis), D.N.B. Ex. Senior Resident PGI Chandigarh Ex. Asst. Professor PGIMS, Rohtak Fellow Foetal Medicine & Clinical Genetics MSK Radiologist (Training-Kings College, UK) Diploma in Musculoskeletal Imaging (Spain)",
-        regnNo: "HN010759"
+        name: "Dr. Arun Kumar Narula",
+        resposibility: "Director",
+        role: "Chief Radiologist",
+        desc: "M.B.B.S., M.D., D.M.R.D., F.I.A.M.S. (Radio-Diagnosis) Chief Radiologist HMC",
+        regnNo: "395"
     },
     {
         img: "/images/DrApoorv.jpeg",
@@ -41,7 +42,7 @@ const experts = [
 const sectionGradient = `linear-gradient(120deg, #DFF7FA  0%, #DFF7FA 60%, #ffff 100%)`;
 
 // doctor card (doctor ke name ke bg me card jaisa design, use gradient blue color do)
-function DoctorCard({ img, name, role, desc, regnNo }: any) {
+function DoctorCard({ img, name, role, desc, regnNo, resposibility }: any) {
     // card sizes similar to why-choose cards
     const cardWidth = 310;
     // Find max height for text area dynamically based on longest text
@@ -125,6 +126,17 @@ function DoctorCard({ img, name, role, desc, regnNo }: any) {
                     justifyContent: "flex-start",
                 }}
             >
+                {/* Show resposibility if provided FIRST */}
+                {resposibility && (
+                    <div
+                        className="text-xs md:text-sm text-blue-800 font-medium mb-1"
+                        style={{
+                            color: BLUE_800,
+                        }}
+                    >
+                        {resposibility}
+                    </div>
+                )}
                 <div
                     className="text-sm md:text-base text-[#134471] text-center font-bold mb-1"
                     style={{
@@ -204,12 +216,12 @@ export default function TeamSection({ className }: { className?: string }) {
                     </h2>
                 </div>
 
-                <div className="overflow-hidden rounded-xl border border-primary/20">
+                <div className="overflow-hidden rounded-xl border border-primary/20 p-2">
                     <img
-                        src="/images/team.png"
+                        src="/images/team.jpeg"
                         alt="Our medical professionals team group photo"
-                        className="w-full object-cover"
-                        style={{ aspectRatio: "16/9" }}
+                        className="w-full object-cover rounded-lg"
+                        style={{ aspectRatio: "19/9" }}
                     />
                 </div>
 

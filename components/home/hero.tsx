@@ -123,7 +123,7 @@ const HeroSection = () => {
             </div>
 
             {/* Hero Content */}
-            <div className="relative z-30 max-w-[1240px] mx-auto flex flex-col min-h-[20vh] px-4 pt-20 md:pt-26">
+            <div className="relative z-30 max-w-[1240px] mx-auto flex flex-col min-h-[20vh] px-4 pt-20 md:pt-25">
                 {/* Heading & Buttons */}
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full">
                     <div className="flex flex-col gap-6 md:gap-7 max-w-xl -mt-9 relative z-40">

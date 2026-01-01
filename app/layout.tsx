@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import AppLayout from "@/components/(website)/layout";
+import WebsiteLayout from "@/components/(website)/layout";
 import { CartProvider } from "@/contexts/CartContext";
+
+
 
 export const metadata: Metadata = {
   title: "Narula Diagnostics Centre",
@@ -17,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <CartProvider>
-          <AppLayout>{children}</AppLayout>
+          <WebsiteLayout>{children}</WebsiteLayout>
         </CartProvider>
       </body>
     </html>

@@ -4,6 +4,8 @@ import Header from "@/components/(website)/header";
 import Footer from "@/components/(website)/footer";
 import FloatingContactMenu from "@/components/(website)/floatingContactMenu";
 import FloatingHeader from "@/components/(website)/floatingHeader";
+// Fix import: PopupLogic must be imported as default, not with {}.
+import PopupLogic from "../(website)/popover";
 
 export default function WebsiteLayout({
     children,
@@ -17,6 +19,7 @@ export default function WebsiteLayout({
             <main className="flex-grow">{children}</main>
             <Footer />
             <FloatingContactMenu />
+            <PopupLogic />
         </div>
     );
 }

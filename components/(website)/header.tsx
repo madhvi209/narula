@@ -105,96 +105,30 @@ export function Header() {
     router.push('/cart')
   }
 
+  // Handler for Book Test click
+  const handleBookTestClick = () => {
+    router.push("/book-test")
+  }
+
   return (
     <>
       <header className="bg-gray-100 border-b sticky top-0 z-50">
-        {/* Search Bar & Online Report */}
-        {isClient && (
-          <div className="bg-white border-b relative z-30 p-2">
-            <div className="mx-auto px-0.5 w-full max-w-5xl flex flex-col md:flex-row items-stretch md:items-center gap-1 py-1.5">
-              {/* Search Box */}
-              <form
-                onSubmit={handleSearch}
-                className="flex flex-1 w-full md:w-auto gap-0"
-                role="search"
-              >
-                {/* City Selector */}
-                <div className="flex items-center border border-[#00A5D4] bg-[#f0faff] rounded-l-md pr-0.5 h-8 md:h-10 min-w-[70px] md:min-w-[140px]">
-                  <span className="w-4 h-4 md:w-5 md:h-5 flex items-center justify-center">
-                    <LocationIcon />
-                  </span>
-                  <select
-                    className="bg-transparent outline-none text-[#14486d] font-medium text-xs md:text-base"
-                    style={{ minWidth: 45 }}
-                    value={searchValue.city}
-                    onChange={e =>
-                      setSearchValue(prev => ({
-                        ...prev,
-                        city: e.target.value,
-                      }))
-                    }
-                  >
-                    <option value="">Select City</option>
-                    <option value="Gurgaon">Gurgaon</option>
-                    <option value="Rohtak">Rohtak</option>
-                  </select>
-                </div>
-                {/* Test Search */}
-                <div className="flex flex-1 items-center border-t border-b border-[#00A5D4] bg-[#f0faff] h-8 md:h-10 min-w-[70px] md:min-w-[180px]">
-                  <Search className="w-4 h-4 text-[#00A5D4] ml-1 mr-1 md:w-5 md:h-5 md:ml-2" />
-                  <input
-                    type="text"
-                    placeholder="Search Tests"
-                    value={searchValue.test}
-                    onChange={e =>
-                      setSearchValue(prev => ({
-                        ...prev,
-                        test: e.target.value,
-                      }))
-                    }
-                    className="bg-transparent outline-none flex-1 text-[#14486d] font-medium text-xs md:text-base"
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  className="bg-[#00A5D4] hover:bg-[#0090b8] text-white px-1.5 md:px-3 h-8 md:h-10 flex items-center font-semibold text-xs md:text-base border border-[#00A5D4] border-l-0 rounded-l-none rounded-r-md min-w-[36px] md:min-w-[48px]"
-                >
-                  <span className="hidden md:inline">Search</span>
-                  <Search className="w-4 h-4 md:w-5 md:h-5 md:ml-0" />
-                </Button>
-              </form>
-              {/* Online Report */}
-              <Button
-                asChild
-                className="ml-0 md:ml-3 bg-gradient-to-r from-[#6acce7] to-[#14486d] hover:from-[#0090b8] hover:to-[#14486d] text-white px-2 md:px-5 h-8 md:h-10 text-xs md:text-base font-semibold rounded-lg min-w-[70px] md:min-w-[auto]"
-              >
-                <a
-                  href="https://www.naruladiagnostics.com/online-report"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Online Report
-                </a>
-              </Button>
-            </div>
-          </div>
-        )}
-
-        <div className="mx-auto px-4 w-full max-w-6xl">
+        {/* New: Logo FIRST */}
+        <div className="mx-auto px-4 w-full max-w-7xl">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <div className=" rounded-lg px-3 py-1 flex items-center">
-              <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+            <div className="rounded-lg pl-1 pr-6 py-1 flex items-center" style={{ flexBasis: "260px", minWidth: 0, maxWidth: 340 }}>
+              <Link href="/" className="flex items-center gap-3 flex-shrink-0">
                 <img
                   src="/images/logo.png"
                   alt="Narula Diagnostics Logo"
-                  className="h-7 md:h-12 w-auto object-contain"
+                  className="h-16 w-auto object-contain md:h-24 lg:h-24 lg:w-80"
                 />
               </Link>
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-8 relative z-50">
+            <nav className="hidden lg:flex items-center gap-10 relative z-50">
               <a
                 href="/"
                 className="text-[#0B4A8C] text-sm font-medium hover:text-[#52CCF6] transition-colors"
@@ -289,7 +223,7 @@ export function Header() {
             </nav>
 
             {/* Desktop Actions */}
-            <div className="hidden md:flex items-center gap-3 lg:gap-6">
+            <div className="hidden md:flex items-center gap-3 lg:gap-8">
               <Button
                 variant="ghost"
                 size="icon"
@@ -321,12 +255,12 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative w-12 h-12 bg-white"
+                className="relative w-9 h-9 md:w-12 md:h-12 bg-white"
                 onClick={handleCartClick}
               >
-                <ShoppingCart className="w-6 h-6" />
+                <ShoppingCart className="w-5 h-5 md:w-6 md:h-6" />
                 {totalItems > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-6 w-6 flex items-center justify-center p-0 bg-[#00A5D4] text-xs">
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 md:h-6 md:w-6 flex items-center justify-center p-0 bg-[#00A5D4] text-xs">
                     {totalItems}
                   </Badge>
                 )}
@@ -334,53 +268,133 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="w-12 h-12"
+                className="w-9 h-9 md:w-12 md:h-12"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
-                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {isMobileMenuOpen ? <X className="w-5 h-5 md:w-6 md:h-6" /> : <Menu className="w-5 h-5 md:w-6 md:h-6" />}
               </Button>
             </div>
           </div>
         </div>
 
-       
+        {/* Then: Search Bar & Online Report */}
+        {isClient && (
+          <div className="bg-white border-b relative z-30 p-2">
+            <div className="mx-auto px-2 w-full max-w-6xl flex flex-col md:flex-row items-stretch md:items-center gap-1 py-1.5">
+              {/* Search Box */}
+              <form
+                onSubmit={handleSearch}
+                className="flex flex-1 w-full md:w-auto gap-0"
+                role="search"
+              >
+                {/* City Selector */}
+                <div className="flex items-center border border-[#00A5D4] bg-[#f0faff] rounded-l-md pr-0.5 h-8 md:h-10 min-w-[80px] md:min-w-[150px]">
+                  <span className="w-4 h-4 md:w-5 md:h-5 flex items-center justify-center">
+                    <LocationIcon />
+                  </span>
+                  <select
+                    className="bg-transparent outline-none text-[#14486d] font-medium text-xs md:text-base"
+                    style={{ minWidth: 55 }}
+                    value={searchValue.city}
+                    onChange={e =>
+                      setSearchValue(prev => ({
+                        ...prev,
+                        city: e.target.value,
+                      }))
+                    }
+                  >
+                    <option value="">Select City</option>
+                    <option value="Gurgaon">Gurgaon</option>
+                    <option value="Rohtak">Rohtak</option>
+                  </select>
+                </div>
+                {/* Test Search */}
+                <div className="flex flex-1 items-center border-t border-b border-[#00A5D4] bg-[#f0faff] h-8 md:h-10 min-w-[70px] md:min-w-[170px]">
+                  <Search className="w-4 h-4 text-[#00A5D4] ml-1 mr-1 md:w-5 md:h-5 md:ml-2" />
+                  <input
+                    type="text"
+                    placeholder="Search Tests"
+                    value={searchValue.test}
+                    onChange={e =>
+                      setSearchValue(prev => ({
+                        ...prev,
+                        test: e.target.value,
+                      }))
+                    }
+                    className="bg-transparent outline-none flex-1 text-[#14486d] font-medium text-xs md:text-base"
+                    style={{ minWidth: "50px" }}
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="bg-[#00A5D4] hover:bg-[#0090b8] text-white px-2 md:px-3 h-8 md:h-10 flex items-center font-semibold text-xs md:text-base border border-[#00A5D4] border-l-0 rounded-l-none rounded-r-md min-w-[40px] md:min-w-[50px]"
+                >
+                  <span className="hidden md:inline">Search</span>
+                  <Search className="w-4 h-4 md:w-5 md:h-5 md:ml-0" />
+                </Button>
+              </form>
+              {/* Online Report and Book Test */}
+              <div className="flex items-center gap-2">
+                <Button
+                  asChild
+                  className="ml-0 md:ml-3 bg-gradient-to-r from-[#6acce7] to-[#14486d] hover:from-[#0090b8] hover:to-[#14486d] text-white px-3 md:px-6 h-8 md:h-10 text-xs md:text-base font-semibold rounded-lg min-w-[90px] md:min-w-[auto]"
+                >
+                  <a
+                    href="https://www.naruladiagnostics.com/online-report"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Online Report
+                  </a>
+                </Button>
+                <Button
+                  onClick={handleBookTestClick}
+                  className="ml-1 bg-gradient-to-r from-[#00a5d4] to-[#0B4A8C] hover:from-[#0B4A8C] hover:to-[#00a5d4] text-white px-3 md:px-6 h-8 md:h-10 text-xs md:text-base font-semibold rounded-lg min-w-[90px] md:min-w-[auto]"
+                >
+                  Book Test
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden border-t bg-white relative z-40">
             <nav className="py-5 space-y-2">
-              <Link href="/" className="block px-2 py-2.5 text-xs" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link href="/" className="block px-3 py-2.5 text-xs" onClick={() => setIsMobileMenuOpen(false)}>
                 Home
               </Link>
-              <Link href="#about" className="block px-2 py-2.5 text-xs" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link href="#about" className="block px-3 py-2.5 text-xs" onClick={() => setIsMobileMenuOpen(false)}>
                 About Us
               </Link>
-              <Link href="#tests" className="block px-2 py-2.5 text-xs" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link href="#tests" className="block px-3 py-2.5 text-xs" onClick={() => setIsMobileMenuOpen(false)}>
                 Tests
               </Link>
-              <Link href="#services" className="block px-2 py-2.5 text-xs" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link href="#services" className="block px-3 py-2.5 text-xs" onClick={() => setIsMobileMenuOpen(false)}>
                 Services
               </Link>
-              <Link href="/cart" className="block px-2 py-2.5 text-xs" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link href="/cart" className="block px-3 py-2.5 text-xs" onClick={() => setIsMobileMenuOpen(false)}>
                 Cart
               </Link>
-              <Link href="#quick-links" className="block px-2 py-2.5 text-xs" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link href="#quick-links" className="block px-3 py-2.5 text-xs" onClick={() => setIsMobileMenuOpen(false)}>
                 Quick Links
               </Link>
-              <div className="px-1 pt-5 space-y-2">
-                <Button className="w-full bg-[#00A5D4] hover:bg-[#0090b8] text-white h-7 min-w-0 text-xs">
+              <div className="px-2 pt-5 space-y-2">
+                <Button className="w-full bg-[#00A5D4] hover:bg-[#0090b8] text-white h-8 min-w-0 text-xs">
                   <Phone className="w-4 h-4 mr-1" /> Contact
                 </Button>
                 <Button 
                   onClick={handleLogin}
                   variant="outline" 
-                  className="w-full border-[#00A5D4] text-[#00A5D4] h-7 min-w-0 text-xs flex items-center justify-center gap-1"
+                  className="w-full border-[#00A5D4] text-[#00A5D4] h-8 min-w-0 text-xs flex items-center justify-center gap-1"
                 >
                   <LogIn className="w-3 h-3" />
                   Login
                 </Button>
                 <Button
                   asChild
-                  className="w-full bg-gradient-to-r from-[#6acce7] to-[#14486d] hover:from-[#0090b8] hover:to-[#14486d] text-white h-7 min-w-0 text-xs"
+                  className="w-full bg-gradient-to-r from-[#6acce7] to-[#14486d] hover:from-[#0090b8] hover:to-[#14486d] text-white h-8 min-w-0 text-xs"
                 >
                   <a
                     href="https://www.naruladiagnostics.com/online-report"

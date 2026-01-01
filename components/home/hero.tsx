@@ -174,7 +174,7 @@ const HeroSection = () => {
                 objectFit: "fill"
               }}
             >
-              <source src="/video/hero.mp4" type="video/mp4" />
+              <source src="/video/Hero.mp4" type="video/mp4" />
             </video>
             {/* SKIP BUTTON on video controls (only in full mode) */}
             {interactionState === "full" && (

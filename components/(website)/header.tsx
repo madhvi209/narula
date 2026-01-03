@@ -1,6 +1,6 @@
 "use client"
 
-import { Phone, ShoppingCart, Menu, X, ChevronDown, Search, LogIn, User } from "lucide-react"
+import { Phone, ShoppingCart, Menu, X, ChevronDown, Search, LogIn } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -20,15 +20,8 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [searchValue, setSearchValue] = useState<SearchValue>({ city: "", test: "" })
   const [isClient, setIsClient] = useState(false)
-
-  // Navigation handlers
-  const handleLogin = () => {
-    router.push("/login")
-  }
-
-  const handleSignup = () => {
-    router.push("/signup")
-  }
+  const [isMoreOpen, setIsMoreOpen] = useState(false)
+  const moreDropdownRef = useRef<HTMLDivElement>(null)
 
   // Dropdown open state for desktop nav
   const [openDropdown, setOpenDropdown] = useState<null | "tests" | "services">(null)
@@ -44,6 +37,15 @@ export function Header() {
   // Close dropdowns on click outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
+      // For custom More/lines button
+      if (
+        isMoreOpen &&
+        moreDropdownRef.current &&
+        !moreDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsMoreOpen(false)
+      }
+      // Navigation main dropdowns
       if (
         openDropdown === "tests" &&
         testsDropdownRef.current &&
@@ -59,7 +61,7 @@ export function Header() {
         setOpenDropdown(null)
       }
     }
-    if (openDropdown) {
+    if (openDropdown || isMoreOpen) {
       document.addEventListener("mousedown", handleClickOutside)
     } else {
       document.removeEventListener("mousedown", handleClickOutside)
@@ -67,13 +69,12 @@ export function Header() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
-  }, [openDropdown])
+  }, [openDropdown, isMoreOpen])
 
   // Dummy search handler
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     if (searchValue.city.trim() || searchValue.test.trim()) {
-      // You can adjust the query string as needed
       const params = new URLSearchParams()
       if (searchValue.city.trim()) params.append("city", searchValue.city)
       if (searchValue.test.trim()) params.append("q", searchValue.test)
@@ -108,6 +109,17 @@ export function Header() {
   // Handler for Book Test click
   const handleBookTestClick = () => {
     router.push("/book-test")
+  }
+
+  // More dropdown logic: clicking the lines opens the menu just like More button
+  const handleMoreClick = () => {
+    setIsMoreOpen((prev) => !prev)
+  }
+
+  // More menu item actions
+  const handleMoreItemClick = (href: string) => {
+    setIsMoreOpen(false)
+    router.push(href)
   }
 
   return (
@@ -242,7 +254,7 @@ export function Header() {
                 <span className="hidden sm:inline">Contact</span>
               </Button>
               <Button 
-                onClick={handleLogin}
+                onClick={() => router.push("/login")}
                 className="bg-white text-[#00A5D4] border border-[#00A5D4] hover:bg-[#90bfca] h-11 px-6 min-w-[120px] flex items-center gap-2"
               >
                 <LogIn className="w-4 h-4" />
@@ -334,7 +346,7 @@ export function Header() {
                 </Button>
               </form>
               {/* Online Report and Book Test */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 relative">
                 <Button
                   asChild
                   className="ml-0 md:ml-3 bg-gradient-to-r from-[#6acce7] to-[#14486d] hover:from-[#0090b8] hover:to-[#14486d] text-white px-3 md:px-6 h-8 md:h-10 text-xs md:text-base font-semibold rounded-lg min-w-[90px] md:min-w-[auto]"
@@ -353,6 +365,51 @@ export function Header() {
                 >
                   Book Test
                 </Button>
+                {/* 3–4 blue lines, clickable, open More dropdown */}
+                <div className="relative ml-2" ref={moreDropdownRef}>
+                  <button
+                    type="button"
+                    aria-label="Show more"
+                    onClick={handleMoreClick}
+                    className="focus:outline-none"
+                    style={{ background: "none", border: "none", padding: 0, margin: 0 }}
+                  >
+                    <div className="flex flex-col justify-center items-center h-10">
+                      <div className="w-8 h-1 rounded-full bg-[#0B4A8C] mb-1" />
+                      <div className="w-8 h-1 rounded-full bg-[#0B4A8C] mb-1" />
+                      <div className="w-8 h-1 rounded-full bg-[#0B4A8C] mb-1" />
+                      <div className="w-8 h-1 rounded-full bg-[#0B4A8C]" />
+                    </div>
+                  </button>
+                  {isMoreOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded z-50 border">
+                      <button
+                        className="w-full text-left px-4 py-2 text-sm hover:bg-[#f0f8ff]"
+                        onClick={() => handleMoreItemClick("/book-test")}
+                      >
+                        Book Test
+                      </button>
+                      <button
+                        className="w-full text-left px-4 py-2 text-sm hover:bg-[#f0f8ff]"
+                        onClick={() => handleMoreItemClick("/home-collection")}
+                      >
+                        Home Collection
+                      </button>
+                      <button
+                        className="w-full text-left px-4 py-2 text-sm hover:bg-[#f0f8ff]"
+                        onClick={() => handleMoreItemClick("/appointment")}
+                      >
+                        Appointment
+                      </button>
+                      <button
+                        className="w-full text-left px-4 py-2 text-sm hover:bg-[#f0f8ff]"
+                        onClick={() => handleMoreItemClick("/health-packages")}
+                      >
+                        Health Packages
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -385,7 +442,7 @@ export function Header() {
                   <Phone className="w-4 h-4 mr-1" /> Contact
                 </Button>
                 <Button 
-                  onClick={handleLogin}
+                  onClick={() => router.push("/login")}
                   variant="outline" 
                   className="w-full border-[#00A5D4] text-[#00A5D4] h-8 min-w-0 text-xs flex items-center justify-center gap-1"
                 >
@@ -404,6 +461,51 @@ export function Header() {
                     Online Report
                   </a>
                 </Button>
+                {/* 3–4 blue lines for mobile More, clicking shows same More options */}
+                <div className="relative flex flex-col items-center pt-2 pb-1" ref={moreDropdownRef}>
+                  <button
+                    type="button"
+                    aria-label="Show more"
+                    onClick={handleMoreClick}
+                    className="focus:outline-none"
+                    style={{ background: "none", border: "none", padding: 0, margin: 0 }}
+                  >
+                    <div className="flex flex-col items-center">
+                      <div className="w-8 h-1 rounded-full bg-[#0B4A8C] mb-1" />
+                      <div className="w-8 h-1 rounded-full bg-[#0B4A8C] mb-1" />
+                      <div className="w-8 h-1 rounded-full bg-[#0B4A8C] mb-1" />
+                      <div className="w-8 h-1 rounded-full bg-[#0B4A8C]" />
+                    </div>
+                  </button>
+                  {isMoreOpen && (
+                    <div className="mt-2 bg-white shadow-lg rounded z-50 border w-48">
+                      <button
+                        className="w-full text-left px-4 py-2 text-xs hover:bg-[#f0f8ff]"
+                        onClick={() => { setIsMoreOpen(false); router.push("/book-test") }}
+                      >
+                        Book Test
+                      </button>
+                      <button
+                        className="w-full text-left px-4 py-2 text-xs hover:bg-[#f0f8ff]"
+                        onClick={() => { setIsMoreOpen(false); router.push("/home-collection") }}
+                      >
+                        Home Collection
+                      </button>
+                      <button
+                        className="w-full text-left px-4 py-2 text-xs hover:bg-[#f0f8ff]"
+                        onClick={() => { setIsMoreOpen(false); router.push("/appointment") }}
+                      >
+                        Appointment
+                      </button>
+                      <button
+                        className="w-full text-left px-4 py-2 text-xs hover:bg-[#f0f8ff]"
+                        onClick={() => { setIsMoreOpen(false); router.push("/health-packages") }}
+                      >
+                        Health Packages
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </nav>
           </div>

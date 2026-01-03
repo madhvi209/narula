@@ -8,7 +8,7 @@ type Props = { className?: string }
 const items = [
   {
     icon: SearchX,
-    title: "Find a Test",
+    title: "Book Test",
     subtitle: "View Tests and Prices",
   },
   {

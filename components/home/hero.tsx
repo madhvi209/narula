@@ -55,7 +55,10 @@ const HeroSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const heroVideoRef = useRef<HTMLVideoElement>(null); // NEW
+
+  // This will be used to manually control pause/play UI
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
+  const [isVideoPaused, setIsVideoPaused] = useState(false);
 
   const numSlides = HERO_IMAGES.length;
 
@@ -72,17 +75,28 @@ const HeroSection = () => {
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
   }, [numSlides, interactionState]);
 
-  // --- Ensure video plays in 'full' mode ---
+  // --- Video Always Plays Unless User Paused ---
   useEffect(() => {
-    if (interactionState === "full" && heroVideoRef.current) {
-      const video = heroVideoRef.current;
-      // Only play if not already playing
-      if (video.paused) {
-        // Required for some browsers: can only call play() on user interaction, but "full" mode already comes from interaction.
-        video.play().catch(() => { /* ignore for now */ });
-      }
+    if (!heroVideoRef.current) return;
+    const video = heroVideoRef.current;
+
+    // Only auto play if user hasn't paused
+    if (!isVideoPaused && video.paused) {
+      video.play().catch(() => {});
     }
-  }, [interactionState]);
+    // If resumed from pause via UI, play
+    if (isVideoPaused && !video.paused) {
+      video.pause();
+    }
+  }, [isVideoPaused, interactionState]);
+
+  // Make sure video resumes (if not paused by user) on visibility
+  useEffect(() => {
+    if (!heroVideoRef.current) return;
+    if (!isVideoPaused) {
+      heroVideoRef.current.play().catch(() => {});
+    }
+  }, [showMiniVideo, miniVideoActive, interactionState, isVideoPaused]);
 
   // --- HERO VIDEO INTERACTIONS ---
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -136,10 +150,64 @@ const HeroSection = () => {
       : `polygon(0% 0%, 0% 100%, ${mousePos.x}% ${mousePos.y}%)`;
   };
 
-  // Hero section height (unchanged)
-  const fixedSectionHeight = '72vh';
+  // Video Play/Pause Controls, visible in full mode. User can pause and play.
+  const renderVideoControls = () => {
+    if (interactionState !== "full") return null;
+    return (
+      <div
+        style={{
+          position: "absolute",
+          bottom: 28,
+          right: 38,
+          zIndex: 100,
+          background: "rgba(11,74,140,0.60)",
+          borderRadius: 7,
+          padding: "6px 16px",
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          boxShadow: "0 2px 12px #09375799",
+          color: "#fff"
+        }}
+      >
+        <button
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            color: "#fff",
+            fontWeight: 700,
+            fontSize: 17,
+            marginRight: 6
+          }}
+          aria-label={isVideoPaused ? "Resume Video" : "Pause Video"}
+          onClick={() => {
+            if (!heroVideoRef.current) return;
+            if (isVideoPaused) {
+              setIsVideoPaused(false);
+              heroVideoRef.current.play().catch(() => {});
+            } else {
+              setIsVideoPaused(true);
+              heroVideoRef.current.pause();
+            }
+          }}
+        >
+          {isVideoPaused ? (
+            <svg width={24} height={24} viewBox="0 0 24 24" fill="none"><polygon points="8,5 8,19 19,12" fill="#fff" /></svg>
+          ) : (
+            <svg width={24} height={24} viewBox="0 0 24 24" fill="none"><rect x="6" y="5" width="4" height="14" fill="#fff" /><rect x="14" y="5" width="4" height="14" fill="#fff" /></svg>
+          )}
+        </button>
+        <span className="text-base font-bold select-none" style={{ opacity: 0.72 }}>
+          {isVideoPaused ? "Paused" : "Playing"}
+        </span>
+      </div>
+    );
+  };
 
   // --- Render ---
+  const fixedSectionHeight = '72vh';
+
   return (
     <section
       ref={sectionRef}
@@ -172,7 +240,7 @@ const HeroSection = () => {
         >
           <div className="relative w-full h-full flex items-center justify-center">
             <video
-              ref={heroVideoRef} // ADDED
+              ref={heroVideoRef}
               src={HERO_VIDEO_URL}
               autoPlay
               muted={false}
@@ -199,6 +267,13 @@ const HeroSection = () => {
               tabIndex={-1}
               title="Hero Video"
               onEnded={() => handleVideoEndOrSkip("ended")}
+              onPause={() => {
+                // Pause can be triggered programmatically, only set if not already
+                if (!isVideoPaused) setIsVideoPaused(true);
+              }}
+              onPlay={() => {
+                if (isVideoPaused) setIsVideoPaused(false);
+              }}
             />
             {/* SKIP BUTTON (only in full mode) */}
             {interactionState === "full" && (
@@ -265,6 +340,8 @@ const HeroSection = () => {
                 }}
               />
             )}
+            {/* Play/Pause Controls for full video */}
+            {renderVideoControls()}
           </div>
         </div>
       )}
@@ -309,6 +386,14 @@ const HeroSection = () => {
                 tabIndex={-1}
                 title="Mini Hero Video"
                 onEnded={() => { /* don't expand after mini ends */ }}
+                // Pause state is shared
+                ref={heroVideoRef}
+                onPause={() => {
+                  if (!isVideoPaused) setIsVideoPaused(true);
+                }}
+                onPlay={() => {
+                  if (isVideoPaused) setIsVideoPaused(false);
+                }}
               />
               <button
                 aria-label="Close"
@@ -342,6 +427,7 @@ const HeroSection = () => {
               >
                 <span className="block" style={{ fontSize: 17, lineHeight: 1 }}>⤢</span>
               </button>
+              {/* Show small controls when in mini video? Not shown, user must expand to pause/play */}
             </div>
           </div>
         )

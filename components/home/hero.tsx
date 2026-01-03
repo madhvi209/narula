@@ -8,10 +8,12 @@ import React, { useEffect, useRef, useState } from "react";
 const HERO_IMAGES = [
   "/images/banner/banner.png",
   "/images/banner/banner1.jpeg",
-  "/images/banner/banner3.png",
-  "/images/banner/banner4.png",
-  "/images/banner/banner2.png",
+  "/images/banner/banner2.jpeg",
+  "/images/banner/banner3.jpeg",
+  "/images/banner/banner4.jpeg",
   "/images/banner/banner5.png",
+  "/images/banner/banner6.jpeg",
+  "/images/banner/banner8.jpeg",
 ];
 
 const SLIDE_INTERVAL = 4500;
@@ -33,6 +35,10 @@ const NABLBadge = ({ className = "" }: { className?: string }) => (
   </div>
 );
 
+// Video URL (unchanged)
+const HERO_VIDEO_URL =
+  "https://res.cloudinary.com/drzqdwuxb/video/upload/q_auto:best,ac_none/v1713250916/Hero_zt4vqq.mp4";
+
 const HeroSection = () => {
   // Slideshow
   const [slide, setSlide] = useState(0);
@@ -49,6 +55,7 @@ const HeroSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const heroVideoRef = useRef<HTMLVideoElement>(null); // NEW
 
   const numSlides = HERO_IMAGES.length;
 
@@ -64,6 +71,18 @@ const HeroSection = () => {
     }
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
   }, [numSlides, interactionState]);
+
+  // --- Ensure video plays in 'full' mode ---
+  useEffect(() => {
+    if (interactionState === "full" && heroVideoRef.current) {
+      const video = heroVideoRef.current;
+      // Only play if not already playing
+      if (video.paused) {
+        // Required for some browsers: can only call play() on user interaction, but "full" mode already comes from interaction.
+        video.play().catch(() => { /* ignore for now */ });
+      }
+    }
+  }, [interactionState]);
 
   // --- HERO VIDEO INTERACTIONS ---
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -117,14 +136,15 @@ const HeroSection = () => {
       : `polygon(0% 0%, 0% 100%, ${mousePos.x}% ${mousePos.y}%)`;
   };
 
-  const fixedSectionHeight = '65vh';
+  // Hero section height (unchanged)
+  const fixedSectionHeight = '72vh';
 
   // --- Render ---
   return (
     <section
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="relative min-h-[65vh] md:min-h-[65vh] flex flex-col justify-between overflow-hidden font-sans transition-bg duration-700 cursor-crosshair"
+      className="relative min-h-[72vh] md:min-h-[72vh] w-full flex flex-col justify-between overflow-hidden font-sans transition-bg duration-700 cursor-crosshair"
       style={{ minHeight: fixedSectionHeight }}
     >
       {/* 1. Background Layer: Banners */}
@@ -140,39 +160,47 @@ const HeroSection = () => {
         ))}
       </div>
 
-      {/* 2. Overlay Cloudinary Video (iframe), only if not finished, only on desktop */}
+      {/* 2. Overlay Video - Triangle UI and transitions */}
       {(interactionState !== "finished") && (
         <div
-          className="absolute inset-0 z-10 hidden md:flex items-center justify-center"
+          className="absolute inset-0 w-full h-full z-10 hidden md:flex items-center justify-center"
           style={{
             clipPath: getClipPath(),
-            transition: interactionState === "full" ? 'clip-path 0.8s ease-in-out' : 'clip-path 0.1s ease-out',
-            pointerEvents: interactionState === "full" ? "auto" : "none",
+            transition: interactionState === "full" ? 'clip-path 0.8s cubic-bezier(.33,1.17,.5,1)' : 'clip-path 0.1s ease-out',
+            pointerEvents: interactionState === "full" ? "auto" : "none"
           }}
         >
           <div className="relative w-full h-full flex items-center justify-center">
-            <iframe
-              src="https://player.cloudinary.com/embed/?cloud_name=drzqdwuxb&public_id=Hero_zt4vqq&profile=cld-default&autoplay=true"
-              allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-              allowFullScreen
-              frameBorder="0"
+            <video
+              ref={heroVideoRef} // ADDED
+              src={HERO_VIDEO_URL}
+              autoPlay
+              muted={false}
+              controls={false}
+              playsInline
+              loop
               className="w-full h-full"
               style={{
-                width: "100%",
-                height: "100%",
+                width: "100vw",
+                height: "100vh",
+                minWidth: "100vw",
+                minHeight: "100vh",
                 maxWidth: "100vw",
                 maxHeight: "100vh",
-                objectFit: "fill",
+                objectFit: "cover",
                 border: "none",
                 borderRadius: 0,
                 background: "#000",
-                pointerEvents: interactionState === "full" ? "auto" : "none",
+                pointerEvents: "auto",
+                position: "absolute",
+                inset: 0,
+                zIndex: 0
               }}
               tabIndex={-1}
               title="Hero Video"
+              onEnded={() => handleVideoEndOrSkip("ended")}
             />
-
-            {/* SKIP BUTTON (show in full mode only) */}
+            {/* SKIP BUTTON (only in full mode) */}
             {interactionState === "full" && (
               <button
                 style={{
@@ -230,7 +258,11 @@ const HeroSection = () => {
             {interactionState === "drawing" && (
               <div
                 className="absolute w-6 h-6 bg-cyan-400 blur-xl rounded-full pointer-events-none"
-                style={{ left: `${mousePos.x}%`, top: `${mousePos.y}%`, transform: 'translate(-50%, -50%)' }}
+                style={{
+                  left: `${mousePos.x}%`,
+                  top: `${mousePos.y}%`,
+                  transform: 'translate(-50%, -50%)'
+                }}
               />
             )}
           </div>
@@ -259,21 +291,24 @@ const HeroSection = () => {
             }}
           >
             <div style={{ position: "relative", width: "100%", height: "100%" }}>
-              {/* Using iframe for Cloudinary video, play inline, no controls */}
-              <iframe
-                src="https://player.cloudinary.com/embed/?cloud_name=drzqdwuxb&public_id=Hero_zt4vqq&profile=cld-default&autoplay=true&muted=true"
-                allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-                allowFullScreen
-                frameBorder="0"
+              {/* Mini video uses objectFit: cover to fill the frame */}
+              <video
+                src={HERO_VIDEO_URL}
+                autoPlay
+                muted
+                controls={false}
+                playsInline
+                loop
                 className="w-full h-full"
                 style={{
                   width: "100%",
                   height: "100%",
-                  objectFit: "fill",
+                  objectFit: "cover",
                   background: "#0B4A8C"
                 }}
                 tabIndex={-1}
                 title="Mini Hero Video"
+                onEnded={() => { /* don't expand after mini ends */ }}
               />
               <button
                 aria-label="Close"

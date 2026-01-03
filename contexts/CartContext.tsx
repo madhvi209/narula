@@ -33,11 +33,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [items]);
 
   const addToCart = useCallback((newItem: Omit<CartItem, 'id' | 'quantity'>) => {
-    const itemId = `${newItem.type}-${newItem.category}-${newItem.title}`.replace(/\s+/g, '-').toLowerCase();
-    
+    const normalizeTests = (tests?: string[]) => {
+      if (!tests || tests.length === 0) return '';
+      return tests.slice().map(t => t.trim()).sort().join('|');
+    };
+
+    const testsKey = normalizeTests(newItem.tests);
+    const itemId = `${newItem.type}-${newItem.category}-${newItem.title}-${testsKey}-${newItem.discountedPrice}`
+      .replace(/\s+/g, '-')
+      .toLowerCase();
+
     setItems(prevItems => {
       const existingItem = prevItems.find(item => item.id === itemId);
-      
+
       if (existingItem) {
         return prevItems.map(item =>
           item.id === itemId
@@ -45,7 +53,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             : item
         );
       } else {
-        return [...prevItems, { ...newItem, id: itemId, quantity: 1 }];
+        const itemToAdd: CartItem = {
+          ...newItem,
+          id: itemId,
+          quantity: 1,
+          tests: newItem.tests ? newItem.tests.slice() : undefined,
+          testsCount: newItem.tests ? newItem.tests.length : newItem.testsCount,
+        };
+
+        return [...prevItems, itemToAdd];
       }
     });
   }, []);

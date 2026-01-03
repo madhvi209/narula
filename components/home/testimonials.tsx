@@ -3,7 +3,7 @@ import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { motion, useAnimation } from "framer-motion";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useLayoutEffect, useState } from "react";
 
 // Using global CSS variables for consistent styling
 const DARK_BG_START = "#151a23";      // Very dark blue-gray
@@ -151,8 +151,8 @@ export default function TestimonialsSection() {
     }
   }
 
-  // Set the mount status ref
-  useEffect(() => {
+  // Set the mount status ref using layout effect so it's set before other effects
+  useLayoutEffect(() => {
     isMountedRef.current = true;
     return () => {
       isMountedRef.current = false;

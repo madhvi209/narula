@@ -77,8 +77,8 @@ export function WhyChooseSection() {
 
     const speed = totalScrollWidth / TRANSITION_DURATION;
 
-    // Set hasMounted to true after mount
-    React.useEffect(() => {
+    // Set hasMounted to true after mount using layout effect
+    React.useLayoutEffect(() => {
         setHasMounted(true);
     }, []);
 

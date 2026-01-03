@@ -4,6 +4,7 @@ import FloatingChat from "@/components/(website)/floatingChat";
 import { Shield, X } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 
+// --- HERO SLIDESHOW ---
 const HERO_IMAGES = [
   "/images/banner/banner.png",
   "/images/banner/banner1.jpeg",
@@ -15,6 +16,7 @@ const HERO_IMAGES = [
 
 const SLIDE_INTERVAL = 4500;
 
+// --- UI AT TOP ---
 const NABLBadge = ({ className = "" }: { className?: string }) => (
   <div
     className={`flex items-center gap-3 px-6 py-2 rounded-full shadow-2xl border-2 border-[#04c3ff] bg-gradient-to-r from-[#04c3ff] to-[#0B4A8C] animate-pulse-weak relative overflow-hidden ${className}`}
@@ -32,34 +34,38 @@ const NABLBadge = ({ className = "" }: { className?: string }) => (
 );
 
 const HeroSection = () => {
+  // Slideshow
   const [slide, setSlide] = useState(0);
+
+  // UI/Video states
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const [interactionState, setInteractionState] = useState<"idle" | "drawing" | "full" | "finished">("idle");
   const [entrySide, setEntrySide] = useState<"left" | "right">("right");
   const [showMiniVideo, setShowMiniVideo] = useState(false);
   const [miniVideoActive, setMiniVideoActive] = useState(false);
+
   const [skipReason, setSkipReason] = useState<null | "btn" | "ended">(null);
 
   const sectionRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const numSlides = HERO_IMAGES.length;
 
-  // Banner Slider Logic
+  // --- SLIDESHOW ---
   useEffect(() => {
     if (interactionState === "finished" || interactionState === "idle") {
       intervalRef.current = setInterval(() => {
         setSlide((curr) => (curr + 1) % numSlides);
       }, SLIDE_INTERVAL);
     } else {
-      setSlide(0); // Show first banner during video interaction
+      setSlide(0);
       if (intervalRef.current) clearInterval(intervalRef.current);
     }
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
   }, [numSlides, interactionState]);
 
+  // --- HERO VIDEO INTERACTIONS ---
   const handleMouseMove = (e: React.MouseEvent) => {
     if (interactionState === "full" || interactionState === "finished" || !sectionRef.current) return;
 
@@ -67,12 +73,10 @@ const HeroSection = () => {
     const xPercent = ((e.clientX - rect.left) / rect.width) * 100;
     const yPercent = ((e.clientY - rect.top) / rect.height) * 100;
 
-    // Determine entry side on first move
     if (interactionState === "idle") {
       setEntrySide(xPercent > 50 ? "right" : "left");
       setInteractionState("drawing");
 
-      // Start timer: After 3 seconds of movement, go full screen
       timerRef.current = setTimeout(() => {
         setInteractionState("full");
       }, 3000);
@@ -81,7 +85,6 @@ const HeroSection = () => {
     setMousePos({ x: xPercent, y: yPercent });
   };
 
-  // Video skips (by user or when ends)
   const handleVideoEndOrSkip = (reason: "ended" | "btn") => {
     setInteractionState("finished");
     setShowMiniVideo(true);
@@ -99,21 +102,13 @@ const HeroSection = () => {
     setMiniVideoActive(false);
     setInteractionState("full");
     setSkipReason(null);
-
-    setTimeout(() => {
-      if (videoRef.current) {
-        videoRef.current.currentTime = 0;
-        videoRef.current.play();
-      }
-    }, 100);
   };
 
-  // Used for "Skip Video" on video controls
   const handleSkipButton = () => {
     handleVideoEndOrSkip("btn");
   };
 
-  // Calculate the Clip Path based on entry side
+  // --- CALCULATE CLIP PATH ---
   const getClipPath = () => {
     if (interactionState === "full") return "inset(0% 0% 0% 0%)";
     if (interactionState === "idle" || interactionState === "finished") return "inset(0% 0% 0% 100%)";
@@ -124,6 +119,7 @@ const HeroSection = () => {
 
   const fixedSectionHeight = '65vh';
 
+  // --- Render ---
   return (
     <section
       ref={sectionRef}
@@ -139,44 +135,44 @@ const HeroSection = () => {
             src={src}
             alt="Hero"
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${slide === idx ? "opacity-100" : "opacity-0"}`}
+            draggable={false}
           />
         ))}
       </div>
 
-      {/* 2. Middle Layer: Video (Hidden on mobile) */}
+      {/* 2. Overlay Cloudinary Video (iframe), only if not finished, only on desktop */}
       {(interactionState !== "finished") && (
         <div
-          className="absolute inset-0 z-10 hidden md:block"
+          className="absolute inset-0 z-10 hidden md:flex items-center justify-center"
           style={{
             clipPath: getClipPath(),
             transition: interactionState === "full" ? 'clip-path 0.8s ease-in-out' : 'clip-path 0.1s ease-out',
             pointerEvents: interactionState === "full" ? "auto" : "none",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
           }}
         >
-          <div className="relative w-full h-full">
-            <video
-              ref={videoRef}
-              autoPlay
-              muted={interactionState !== "full"} // Unmute when full for better experience
-              loop={interactionState !== "full"}
-              playsInline
-              onEnded={() => handleVideoEndOrSkip("ended")}
-              controls={interactionState === "full"}
+          <div className="relative w-full h-full flex items-center justify-center">
+            <iframe
+              src="https://player.cloudinary.com/embed/?cloud_name=drzqdwuxb&public_id=Hero_zt4vqq&profile=cld-default&autoplay=true"
+              allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+              allowFullScreen
+              frameBorder="0"
               className="w-full h-full"
               style={{
                 width: "100%",
                 height: "100%",
                 maxWidth: "100vw",
                 maxHeight: "100vh",
-                objectFit: "fill"
+                objectFit: "fill",
+                border: "none",
+                borderRadius: 0,
+                background: "#000",
+                pointerEvents: interactionState === "full" ? "auto" : "none",
               }}
-            >
-              <source src="/video/Hero.mp4" type="video/mp4" />
-            </video>
-            {/* SKIP BUTTON on video controls (only in full mode) */}
+              tabIndex={-1}
+              title="Hero Video"
+            />
+
+            {/* SKIP BUTTON (show in full mode only) */}
             {interactionState === "full" && (
               <button
                 style={{
@@ -200,8 +196,7 @@ const HeroSection = () => {
                 Skip Video
               </button>
             )}
-
-            {/* Centered Blurred and Light Glow Text with LITTLE blur */}
+            {/* Centered Blurred and Light Glow Text */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
               <span
                 style={{
@@ -222,7 +217,6 @@ const HeroSection = () => {
                 Narula Diagnostic Center
               </span>
             </div>
-
             {/* Close button for full video mode */}
             {interactionState === "full" && (
               <button
@@ -232,8 +226,7 @@ const HeroSection = () => {
                 <X className="text-white w-6 h-6" />
               </button>
             )}
-
-            {/* Cursor Follower Glow (only while drawing) */}
+            {/* Cursor Follower Glow (drawing mode) */}
             {interactionState === "drawing" && (
               <div
                 className="absolute w-6 h-6 bg-cyan-400 blur-xl rounded-full pointer-events-none"
@@ -244,7 +237,7 @@ const HeroSection = () => {
         </div>
       )}
 
-      {/* Mini Video at Top Right (if skipped/closed) - INSIDE THE HERO SECTION */}
+      {/* --- Mini Video at Top Right (if skipped/closed) --- */}
       {showMiniVideo && !miniVideoActive ? null : (
         showMiniVideo && (
           <div
@@ -262,23 +255,26 @@ const HeroSection = () => {
               transition: "opacity 0.3s",
               opacity: 1,
               cursor: "pointer",
-              zIndex: 60, // above most other hero elements
+              zIndex: 60,
             }}
           >
             <div style={{ position: "relative", width: "100%", height: "100%" }}>
-              <video
-                src="/video/hero.mp4"
+              {/* Using iframe for Cloudinary video, play inline, no controls */}
+              <iframe
+                src="https://player.cloudinary.com/embed/?cloud_name=drzqdwuxb&public_id=Hero_zt4vqq&profile=cld-default&autoplay=true&muted=true"
+                allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                allowFullScreen
+                frameBorder="0"
+                className="w-full h-full"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "fill",
+                  background: "#0B4A8C"
+                }}
                 tabIndex={-1}
-                style={{ width: "100%", height: "100%", objectFit: "fill", background: "#0B4A8C" }}
-                muted
-                loop
-                autoPlay
-                playsInline
-                controls={false}
-                aria-hidden="true"
-                onClick={handleMiniVideoExpand}
+                title="Mini Hero Video"
               />
-              {/* Overlay mini controls */}
               <button
                 aria-label="Close"
                 className="absolute top-1 left-1 bg-[#052e53bb] hover:bg-[#204763c0] rounded-full p-1"
@@ -316,12 +312,12 @@ const HeroSection = () => {
         )
       )}
 
-      {/* 3. Top Layer: UI Elements */}
+      {/* --- TOP UI BADGE --- */}
       <div className={`absolute top-2 left-1/2 z-40 flex transition-transform duration-500 ${slide === 0 ? "translate-x-[8%]" : "-translate-x-1/2"}`}>
         <NABLBadge />
       </div>
 
-      {/* Slide Indicators - Show when idle or finished */}
+      {/* --- SLIDE DOTS INDICATOR --- */}
       {(interactionState === "finished" || interactionState === "idle") && (
         <div className="absolute bottom-7 left-1/2 transform -translate-x-1/2 z-30 flex gap-2">
           {HERO_IMAGES.map((_, idx) => (
@@ -333,7 +329,6 @@ const HeroSection = () => {
           ))}
         </div>
       )}
-
       <FloatingChat />
     </section>
   );

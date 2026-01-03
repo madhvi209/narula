@@ -366,7 +366,7 @@ export function Header() {
                   Book Test
                 </Button>
                 {/* 3–4 blue lines, clickable, open More dropdown */}
-                <div className="relative ml-2" ref={moreDropdownRef}>
+                <div className="relative ml-2 -mt-2.5" ref={moreDropdownRef}>
                   <button
                     type="button"
                     aria-label="Show more"
@@ -374,11 +374,10 @@ export function Header() {
                     className="focus:outline-none"
                     style={{ background: "none", border: "none", padding: 0, margin: 0 }}
                   >
-                    <div className="flex flex-col justify-center items-center h-10">
-                      <div className="w-8 h-1 rounded-full bg-[#0B4A8C] mb-1" />
-                      <div className="w-8 h-1 rounded-full bg-[#0B4A8C] mb-1" />
-                      <div className="w-8 h-1 rounded-full bg-[#0B4A8C] mb-1" />
-                      <div className="w-8 h-1 rounded-full bg-[#0B4A8C]" />
+                    <div className="flex flex-col justify-center items-center h-7">
+                      <div className="w-8 h-[3px] rounded-full bg-[#00A5D4] mb-1" />
+                      <div className="w-8 h-[3px] rounded-full bg-[#00A5D4] mb-1" />
+                      <div className="w-8 h-[3px] rounded-full bg-[#00A5D4]" />
                     </div>
                   </button>
                   {isMoreOpen && (

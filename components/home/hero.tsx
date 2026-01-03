@@ -215,17 +215,27 @@ const HeroSection = () => {
       className="relative min-h-[72vh] md:min-h-[72vh] w-full flex flex-col justify-between overflow-hidden font-sans transition-bg duration-700 cursor-crosshair"
       style={{ minHeight: fixedSectionHeight }}
     >
-      {/* 1. Background Layer: Banners */}
-      <div className="absolute inset-0 w-full h-full z-0">
-        {HERO_IMAGES.map((src, idx) => (
-          <img
-            key={src}
-            src={src}
-            alt="Hero"
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${slide === idx ? "opacity-100" : "opacity-0"}`}
-            draggable={false}
-          />
-        ))}
+      {/* 1. Background Layer: Banners with SLIGHT White Frame */}
+      <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center pointer-events-none">
+        <div
+          className="w-[99.2%] h-[98.7%] bg-white rounded-lg mx-auto my-auto shadow-[0_0_28px_#4a82a61a] relative overflow-hidden pointer-events-auto"
+          style={{
+            border: '2px solid #fff',
+            boxSizing: 'border-box',
+            boxShadow: "0 0px 28px #4a82a61a"
+          }}
+        >
+          {HERO_IMAGES.map((src, idx) => (
+            <img
+              key={src}
+              src={src}
+              alt="Hero"
+              className={`absolute inset-0 w-full h-full object-cover rounded-md transition-opacity duration-700 ${slide === idx ? "opacity-100" : "opacity-0"}`}
+              style={{ borderRadius: "8px" }}
+              draggable={false}
+            />
+          ))}
+        </div>
       </div>
 
       {/* 2. Overlay Video - Triangle UI and transitions */}
@@ -249,20 +259,22 @@ const HeroSection = () => {
               loop
               className="w-full h-full"
               style={{
-                width: "100vw",
-                height: "100vh",
-                minWidth: "100vw",
-                minHeight: "100vh",
-                maxWidth: "100vw",
-                maxHeight: "100vh",
+                width: "99vw",
+                height: "98.7vh",
+                minWidth: "99vw",
+                minHeight: "98.7vh",
+                maxWidth: "99vw",
+                maxHeight: "98.7vh",
                 objectFit: "cover",
-                border: "none",
-                borderRadius: 0,
+                border: "2px solid #fff",
+                borderRadius: 8,
                 background: "#000",
                 pointerEvents: "auto",
                 position: "absolute",
                 inset: 0,
-                zIndex: 0
+                zIndex: 0,
+                boxSizing: "border-box",
+                boxShadow: "0 0px 28px #4a82a61a"
               }}
               tabIndex={-1}
               title="Hero Video"
@@ -280,8 +292,8 @@ const HeroSection = () => {
               <button
                 style={{
                   position: "absolute",
-                  top: 16,
-                  left: 16,
+                  top: 20,
+                  left: 20,
                   zIndex: 60,
                   padding: 8,
                   background: "rgba(11,74,140,0.75)",
@@ -357,9 +369,9 @@ const HeroSection = () => {
               width: 260,
               height: 146,
               background: "#16394D99",
-              borderRadius: "16px",
+              borderRadius: "14px",
               overflow: "hidden",
-              border: "2px solid #0B4A8C",
+              border: "1.5px solid #0B4A8C",
               boxShadow: "0 9px 34px #07588e22",
               transition: "opacity 0.3s",
               opacity: 1,
@@ -381,7 +393,10 @@ const HeroSection = () => {
                   width: "100%",
                   height: "100%",
                   objectFit: "cover",
-                  background: "#0B4A8C"
+                  background: "#0B4A8C",
+                  border: "1.5px solid #fff",
+                  borderRadius: 7,
+                  boxSizing: "border-box"
                 }}
                 tabIndex={-1}
                 title="Mini Hero Video"
